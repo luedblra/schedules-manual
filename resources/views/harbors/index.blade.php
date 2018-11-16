@@ -47,17 +47,20 @@
          </div>
       </div>
       @endif
-      
+
       <div class="card card-default color-palette-box">
-         
+
          <div class="card-header">
             <h3 class="card-title">
                <i class="fa fa-tag"></i>
                Manager Harbors
             </h3>
          </div>
-         
+
          <div class="card-body">
+            <div class="col-md-2">
+               <a href="#" class="btn btn-block btn-primary" onclick="showModal(1,0)" > Add <span class="la la-plus"></span></a>
+            </div>
             <table class="table table-condensed" id="myatest">
                <thead >
                   <tr>
@@ -73,11 +76,30 @@
                </thead>
             </table>
          </div>
-         
+
       </div>
    </div>
 </div>
 
+<div class="modal fade bd-example-modal-lg" id="addHarborModal"   role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+               Harbors
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">
+                  &times;
+               </span>
+            </button>
+         </div>
+         <div id="modal-body" class="modal-body">
+
+         </div>
+      </div>
+   </div>
+</div>
 
 @endsection
 
