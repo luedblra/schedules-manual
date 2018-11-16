@@ -12,7 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   return view('welcome');
+});
+
+Route::get('verify/{token}', 'Auth\RegisterController@verifyUser');
+
+Route::middleware(['auth'])->prefix('Harbors')->group(function () {
+   Route::resource('UploadFile','FileHarborsPortsController');
+   Route::get('/loadViewAdd','FileHarborsPortsController@loadviewAdd')->name('load.View.Add');
+   Route::get('/destroyharbor/{id}','FileHarborsPortsController@destroyharbor')->name('destroy.harbor');
 });
 
 Auth::routes();
