@@ -36,7 +36,7 @@
     </div>
     <div class="col-lg-2">
         <br>
-        <a href="#" class="btn btn-primary " onclick="agregarcampo()"><span class="la la-plus"></span></a>
+        <a href="#" class="btn btn-primary " onclick="agregarcampo()"><span class="fa fa-plus"></span></a>
     </div>
 
 </div>

@@ -3,8 +3,44 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    @include('includes.head')
    @include('includes.nav-logout')
-   <body class="hold-transition login-page">
-        
+   <body class="hold-transition login-pageE">
+      <style>
+         body {
+
+            /* Ubicación de la imagen */
+
+            background-image: url(/images/fondo-2-.jpg);
+
+            /* Para dejar la imagen de fondo centrada, vertical y
+
+            horizontalmente */
+
+            background-position: center center;
+
+            /* Para que la imagen de fondo no se repita */
+
+            background-repeat: no-repeat;
+
+            /* La imagen se fija en la ventana de visualización para que la altura de la imagen no supere a la del contenido */
+
+            background-attachment: fixed;
+
+            /* La imagen de fondo se reescala automáticamente con el cambio del ancho de ventana del navegador */
+
+            background-size: cover;
+
+            /* Se muestra un color de fondo mientras se está cargando la imagen
+
+            de fondo o si hay problemas para cargarla */
+
+            background-color: #66999;
+
+         }
+         
+         .card {
+                  opacity: 0.9;
+               }
+      </style>
       <div class="container">
          <div class="row justify-content-center">
             <div class="col-md-8">

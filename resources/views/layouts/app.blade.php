@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
    @include('includes.head')
-   <body class="hold-transition sidebar-mini">
+   <body class="hold-transition sidebar-mini" style="background:#0d216d">
       <div class="wrapper">
 
          <!-- Navbar -->
@@ -199,6 +199,8 @@ Anything you want
       <script src="/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- AdminLTE App -->
       <script src="/AdminLTE/dist/js/adminlte.min.js"></script>
+      <script src="/js/sweetAlert.js"></script>
+      <script  src="/icon/fontawesome/js/all.js"></script>
       @show
    </body>
 </html>

@@ -16,7 +16,10 @@
 
    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
    <!-- Font Awesome Icons -->
-   <link rel="stylesheet" href="/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">
+   <!--<link rel="stylesheet" href="/AdminLTE/plugins/font-awesome/css/font-awesome.min.css">-->
+   <link href="/icon/fontawesome/css/all.css" rel="stylesheet">
+   <!-- Ionicons -->
+   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
    <!-- Theme style -->
    <link rel="stylesheet" href="/AdminLTE/dist/css/adminlte.min.css">
    <link rel="dns-prefetch" href="https://fonts.gstatic.com">

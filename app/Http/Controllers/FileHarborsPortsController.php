@@ -30,9 +30,9 @@ class FileHarborsPortsController extends Controller
                 return $harbor->country['name'];
             })
             ->addColumn('action', function ($harbor) {
-                return '<a href="#" data-id-edit="'.$harbor->id.'" onclick="showModal(2,'.$harbor->id.')" class=""><i class="la  la-edit"></i></a>
+                return '<a href="#" data-id-edit="'.$harbor->id.'" onclick="showModal(2,'.$harbor->id.')" class=""><i class="fa fa-edit"></i></a>
                         &nbsp 
-                        &nbsp  <a href="#" data-id-remove="'.$harbor->id.'" class="BorrarHarbor"><i class="la  la-remove"></i></a>';
+                        &nbsp  <a href="#" data-id-remove="'.$harbor->id.'" class="BorrarHarbor"><i class="fa  fa-trash-alt"></i></a>';
             })
 
             ->make();

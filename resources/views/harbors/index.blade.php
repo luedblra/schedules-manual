@@ -58,11 +58,11 @@
          </div>
 
          <div class="card-body">
-            <div class="col-md-2">
-               <a href="#" class="btn btn-block btn-primary" onclick="showModal(1,0)" > Add <span class="la la-plus"></span></a>
+            <div class="col-lg-2">
+               <a href="#" class="btn btn-block btn-primary" onclick="showModal(1,0)" > Add <span class="fa fa-plus"></span></a>
             </div>
-            <table class="table table-condensed" id="myatest">
-               <thead >
+            <table class="table table-condensed" id="myatest" width="100%">
+               <thead  width="100%">
                   <tr>
                      <th style="width:3%">ID</th>
                      <th style="width:7%">Name</th>
@@ -113,7 +113,7 @@
       var newtr = '<div class="col-lg-4 ">';
       newtr = newtr + '<label class="form-control-label">Variation:</label>';
       newtr = newtr + '<input type="text" name="variation[]" class="form-control" required="required">';
-      newtr = newtr + '<a href="#" class="borrado"><span class="la la-remove"></span></a>';
+      newtr = newtr + '<a href="#" class="borrado"><span class="fa fa-times"></span></a>';
       newtr = newtr + '</div>';
       $('#variatiogroup').append(newtr);
    }
@@ -144,7 +144,7 @@
 
    $(document).on('click','.BorrarHarbor', function(e){
       var elemento = $(this);
-      var id = $(elemento).attr('data-id-remove');
+      var id = $(elemento).attr('data-id-remove'); 
       swal({
          title: 'Are you sure?',
          text: "You won't be able to revert this!",
@@ -206,10 +206,11 @@
          "ordering": true,
          "info": true,
          "deferLoading": 57,
-         "autoWidth": false,
+         "autoWidth": true,
          "processing": true,
          "dom": 'Bfrtip',
-         "paging": true
+         "paging": true,
+         "scrollX":true
       });
 
    });
