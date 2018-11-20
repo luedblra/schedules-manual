@@ -13,70 +13,66 @@ class ImportationController extends Controller
      */
     public function index()
     {
-        //
+        return view('importation.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function uploadSchedules(Request $request)
+    {
+        dd($request->all());
+
+        $now = new \DateTime();
+        $now = $now->format('dmY_His');
+        $file = $request->file('file');
+        $ext = strtolower($file->getClientOriginalExtension());
+        $validator = \Validator::make(
+            array('ext' => $ext),
+            array('ext' => 'in:xls,xlsx,csv')
+        );
+        $Contract_id;
+        if ($validator->fails()) {
+            $request->session()->flash('message.nivel', 'danger');
+            $request->session()->flash('message.content', 'just archive with extension xlsx xls csv');
+            return redirect()->route('importation.index');
+        }
+
+        $nombre = $file->getClientOriginalName();
+        $nombre = $now.'_'.$nombre;
+        $nombre = str_replace(' ','_',$nombre);
+        \Storage::disk('UpLoadFile')->put($nombre,\File::get($file));
+    }
+
     public function create()
     {
-        //
+        dd('llega');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

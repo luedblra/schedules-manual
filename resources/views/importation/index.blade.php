@@ -7,16 +7,16 @@
 @parent
 
 @endsection
-@section('title', 'Guia')
+@section('title', 'Importation')
 @section('cabecera')
 
 <div class="col-sm-6">
-    <h1 class="m-0 text-dark">Título Inicial</h1>
+    <h1 class="m-0 text-dark">Import Schedule</h1>
 </div><!-- /.col -->
 <div class="col-sm-6">
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="/home">Home</a></li>
-        <li class="breadcrumb-item active">localidad</li>
+        <li class="breadcrumb-item active">Importation</li>
     </ol>
 </div>
 
@@ -58,19 +58,49 @@
 
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fa fa-tag"></i>
-                    <!-- Title -->
+                    <i class="fa fa-file-upload"></i>
+                    Manage Importation
                 </h3>
             </div>
 
             <div class="card-body">
-                <!-- Body -->
+
+                {!! Form::open(['route'=>'upload.schedules','method'=>'PUT','files'=>true])!!}
+                <div class="form-group row justify-content-center">
+                    <div class="col-lg-10">
+                        <label for="exampleInputFile">File input</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file" id="inputGroupFile01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="form-group row  justify-content-center">
+                    <div class="col-lg-2">
+                        <div class="input-group">
+                            <input type="submit" class="btn btn-block btn-outline-primary" value="Load"/>
+                        </div>
+                    </div>
+                </div>
+                {!! Form::close()!!}
             </div>
         </div>
     </div>
 </div>
 @section('js-inferior')
 @parent
-
+<script type="application/javascript">
+    $('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
+</script>
 @endsection
 @stop

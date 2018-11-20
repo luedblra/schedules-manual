@@ -28,6 +28,11 @@ Route::middleware(['auth'])->prefix('Harbors')->group(function () {
    Route::get('/destroyharbor/{id}','FileHarborsPortsController@destroyharbor')->name('destroy.harbor');
 });
 
+Route::middleware(['auth'])->prefix('Importation')->group(function () {
+   Route::resource('importation','ImportationController');
+   Route::put('/Upload-Schedules','ImportationController@uploadSchedules')->name('upload.schedules');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
