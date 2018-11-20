@@ -15,6 +15,11 @@ Route::get('/', function () {
    return view('welcome');
 });
 
+Route::get('/guia', function () {
+   return view('guia');
+});
+
+
 Route::get('verify/{token}', 'Auth\RegisterController@verifyUser');
 
 Route::middleware(['auth'])->prefix('Harbors')->group(function () {
