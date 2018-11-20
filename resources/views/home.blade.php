@@ -7,7 +7,7 @@
 @parent
 
 @endsection
-@section('title', 'Guia')
+@section('title', 'Home')
 @section('cabecera')
 
 <div class="col-sm-6">

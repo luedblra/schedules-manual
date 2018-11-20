@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use Illuminate\Http\Request;
 
 class ImportationController extends Controller
@@ -44,7 +45,12 @@ class ImportationController extends Controller
 
     public function create()
     {
-        dd('llega');
+        Excel::selectSheetsByIndex(0)
+            ->Load(\Storage::disk('UpLoadFile')
+                   ->url('test.xlsx'),function($reader)  {
+                       dd($reader);
+
+                   });
     }
 
 
