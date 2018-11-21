@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAccountSchedulesTable extends Migration
+class AddFilesTmpsTable extends Migration
 {
    /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class AddAccountSchedulesTable extends Migration
      */
    public function up()
    {
-      Schema::create('account_schedules', function (Blueprint $table) {
+      Schema::create('files_tmps', function (Blueprint $table) {
          $table->increments('id');
-         $table->string('name');
-         $table->date('date');
+         $table->string('namefile');
+         $table->integer('account_schedules_id')->unsigned();
+         $table->foreign('account_schedules_id')->references('id')->on('account_schedules')->onDelete('cascade');
          $table->timestamps();
       });
    }
@@ -28,6 +29,6 @@ class AddAccountSchedulesTable extends Migration
      */
    public function down()
    {
-      Schema::dropIfExists('account_schedules');
+      Schema::dropIfExists('files_tmps');
    }
 }
