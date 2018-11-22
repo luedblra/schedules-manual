@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Schedule extends Model
+class FailedSchedule extends Model
 {
-   protected $table    = "schedules";
+   protected $table    = "failed_schedules";
    protected $fillable = [
       'origin',
       'destination',
-      'carrier_id',
+      'carrier',
       'vessel',
       'voyage',
       'route_type',
