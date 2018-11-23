@@ -31,6 +31,7 @@ Route::middleware(['auth'])->prefix('Harbors')->group(function () {
 Route::middleware(['auth'])->prefix('Importation')->group(function () {
    Route::resource('importation','ImportationController');
    Route::put('/Upload-Schedules','ImportationController@uploadSchedules')->name('upload.schedules');
+   Route::get('/List-Schedules','ImportationController@showall')->name('list.schedules');
 });
 
 Auth::routes();

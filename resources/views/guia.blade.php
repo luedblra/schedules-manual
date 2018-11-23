@@ -34,9 +34,9 @@
     @endif
     @if(Session::has('message.nivel'))
 
-    <div class="m-alert m-alert--icon m-alert--outline alert alert-{{ session('message.nivel') }} alert-dismissible fade show" role="alert">
+    <div class="alert alert-{{ session('message.nivel') }} alert-dismissible" role="alert">
         <div class="m-alert__icon">
-            <i class="la la-warning"></i>
+            <i class="fa fa-{{ session('message.icon') }}"></i>
         </div>
         <div class="m-alert__text">
             <strong>
@@ -45,7 +45,7 @@
             {{ session('message.content') }}
         </div>
         <div class="m-alert__close">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         </div>
     </div>
     @endif
