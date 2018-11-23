@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
       $this->call(HarborsTableSeeder::class);
       $this->call(CarriersTableSeeder::class);
       $this->call(RoutesTypesTableSeeder::class);
-   }
+       $this->call(AccountSchedulesTableSeeder::class);
+    }
 }

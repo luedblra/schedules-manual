@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Excel;
 use PrvHarbor;
+use App\Harbor;
 use App\FileTmp;
 use App\Carrier;
 use App\Schedule;
@@ -167,10 +168,11 @@ class ImportationController extends Controller
                   $originBol        = false;
                   $destinationBol   = false;
                   $carrierBol       = false;
+                  $vesselBol        = false;
                   $routetypeBol     = false;
                   $etdVBol          = false;
                   $etaVBol          = false;
-                  $transittimeBol   = true;
+                  $transittimeBol   = false;
 
 
                   // CARACTERES A ELIMINAR -------------------------------------------------------------
@@ -217,7 +219,7 @@ class ImportationController extends Controller
                   if(empty($read[$voyageR]) != true){
                      $voyageVal = $read[$voyageR];
                   }else{
-                     $voyageVal = $read[$voyageR].'_E_E';
+                     $voyageVal = '';
 
                   }
 
@@ -238,7 +240,7 @@ class ImportationController extends Controller
                   if(empty($read[$viaR]) != true){
                      $viaVal = $read[$viaR];
                   }else{
-                     $viaVal = $read[$viaR].'_E_E';
+                     $viaVal = '';
                   }
 
                   // ETD -------------------------------------------------------------------------------
@@ -314,7 +316,6 @@ class ImportationController extends Controller
                         ->where('etd',$etdVal)
                         ->where('eta',$etaVal)
                         ->where('transit_time',$transittimeVal)
-                        ->where('account_schedules_id',$accountidR)
                         ->get();
 
                      if(count($countexitSched) == 0){
@@ -376,7 +377,6 @@ class ImportationController extends Controller
                         ->where('etd',$etdVal)
                         ->where('eta',$etaVal)
                         ->where('transit_time',$transittimeVal)
-                        ->where('account_schedules_id',$accountidR)
                         ->get();
 
                      if(count($countexitSchedFailed) == 0){
