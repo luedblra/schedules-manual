@@ -20,4 +20,16 @@ class Schedule extends Model
       'transit_time',
       'account_schedules_id'
    ];
+
+   public function carrier(){
+      return $this->belongsTo('App\Carrier','carrier_id');
+   }
+   
+   public function origen(){
+      return $this->belongsTo('App\Harbor','origin');
+   }
+   
+   public function destination(){
+      return $this->belongsTo('App\Harbor','destination');
+   }
 }

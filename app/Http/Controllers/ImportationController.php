@@ -415,13 +415,10 @@ class ImportationController extends Controller
                 }
             });
         $request->session()->flash('message.title', 'Well done!');
-        return redirect()->route('list.schedules');
+        return redirect()->route('schedule.index');
     }
 
-    public function showall()
-    {
-        return view('schedules.index');
-    }
+
     
     public function show($id)
     {

@@ -31,9 +31,18 @@ Route::middleware(['auth'])->prefix('Harbors')->group(function () {
 Route::middleware(['auth'])->prefix('Importation')->group(function () {
    Route::resource('importation','ImportationController');
    Route::put('/Upload-Schedules','ImportationController@uploadSchedules')->name('upload.schedules');
-   Route::get('/List-Schedules','ImportationController@showall')->name('list.schedules');
+});
+
+
+Route::middleware(['auth'])->prefix('AcountsS')->group(function () {
+   Route::resource('acountS','AccountSchedulesController');
+});
+
+Route::middleware(['auth'])->prefix('Schedules')->group(function () {
+   Route::resource('schedule','SchedulesController');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

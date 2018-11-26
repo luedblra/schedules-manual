@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('css')
 @parent
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 @endsection
 @section('js-superior')
 @parent
@@ -68,16 +68,16 @@
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#failedschedules">Failed Schedules</a>
+                        <a class="nav-link active " data-toggle="tab" href="#goodschedules">Good Schedules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#goodschedules">Good Schedules</a>
+                        <a class="nav-link " data-toggle="tab" href="#failedschedules">Failed Schedules</a>
                     </li>
 
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active container" id="failedschedules">
+                    <div class="tab-pane  container" id="failedschedules">
                         <table class="table table-condensed" id="failedschedulestabla" width="100%">
                             <thead  width="100%">
                                 <tr>
@@ -97,7 +97,7 @@
                             </thead>
                         </table>
                     </div>
-                    <div class="tab-pane  container" id="goodschedules">
+                    <div class="tab-pane active container" id="goodschedules">
                         <table class="table table-condensed" id="goodschedulestabla" width="100%">
                             <thead  width="100%">
                                 <tr>
@@ -128,6 +128,62 @@
 </div>
 @section('js-inferior')
 @parent
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+        <script>
+            $(function() {
+                $('#goodschedulestabla').DataTable({
+                    processing: true,
+                    ajax: '{!! route("schedule.create") !!}',
+                    columns: [
+                        { data: 'surchargelb', name: 'surchargelb' },
+                        { data: 'origin_portLb', name: 'origin_portLb' },
+                        { data: 'destiny_portLb', name: 'destiny_portLb' },
+                        { data: 'typedestinylb', name: "typedestinylb" },
+                        { data: 'calculationtypelb', name: 'calculationtypelb' },
+                        { data: 'ammount', name: "ammount" },
+                        { data: 'currencylb', name: 'currencylb' },
+                        { data: 'carrierlb', name: 'carrierlb' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false },
+                    ],
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "deferLoading": 57,
+                    "autoWidth": true,
+                    "processing": true,
+                    "dom": 'Bfrtip',
+                    "paging": true,
+                   //"scrollX": true,
+                });
 
+               /* $('#failedschedules').DataTable({
+                    processing: true,
+                    //serverSide: true,
+                    ajax: '',
+                    columns: [
+                        { data: 'surchargelb', name: 'surchargelb' },
+                        { data: 'origin_portLb', name: 'origin_portLb' },
+                        { data: 'destiny_portLb', name: 'destiny_portLb' },
+                        { data: 'typedestinylb', name: "typedestinylb" },
+                        { data: 'calculationtypelb', name: 'calculationtypelb' },
+                        { data: 'ammount', name: "ammount" },
+                        { data: 'currencylb', name: 'currencylb' },
+                        { data: 'carrierlb', name: 'carrierlb' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false },
+                    ],
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "deferLoading": 57,
+                    "autoWidth": true,
+                    "processing": true,
+                    "dom": 'Bfrtip',
+                    "paging": true,
+                   //"scrollX": true,
+                }); */
+            });
+           </script>
 @endsection
 @stop
