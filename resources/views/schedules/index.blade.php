@@ -54,7 +54,7 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12">
-        
+
         <div class="card card-default color-palette-box">
 
             <div class="card-header">
@@ -66,62 +66,24 @@
 
             <div class="card-body">
 
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active " data-toggle="tab" href="#goodschedules">Good Schedules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#failedschedules">Failed Schedules</a>
-                    </li>
-
-                </ul>
-
-                <div class="tab-content">
-                    <div class="tab-pane  container" id="failedschedules">
-                        <table class="table table-condensed" id="failedschedulestabla" width="100%">
-                            <thead  width="100%">
-                                <tr>
-                                    <th style="width:3%">ID</th>
-                                    <th style="width:7%">Origin</th>
-                                    <th style="width:7%">Destination</th>
-                                    <th style="width:5%">Carrier</th>
-                                    <th style="width:5%">Vessel</th>
-                                    <th style="width:3%">Voyage</th>
-                                    <th style="width:20%">Route Type</th>
-                                    <th style="width:10%">Via</th>
-                                    <th style="width:10%">Etd</th>
-                                    <th style="width:10%">Eta</th>
-                                    <th style="width:10%">Transit Time</th>
-                                    <th style="width:5%">Options</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="tab-pane active container" id="goodschedules">
-                        <table class="table table-condensed" id="goodschedulestabla" width="100%">
-                            <thead  width="100%">
-                                <tr>
-                                    <th style="width:3%">ID</th>
-                                    <th style="width:7%">Origin</th>
-                                    <th style="width:7%">Destination</th>
-                                    <th style="width:5%">Carrier</th>
-                                    <th style="width:5%">Vessel</th>
-                                    <th style="width:3%">Voyage</th>
-                                    <th style="width:20%">Route Type</th>
-                                    <th style="width:10%">Via</th>
-                                    <th style="width:10%">Etd</th>
-                                    <th style="width:10%">Eta</th>
-                                    <th style="width:10%">Transit Time</th>
-                                    <th style="width:5%">Options</th>
-                                </tr>
-                            </thead>
-                        </table>    
-
-                    </div>
-                
-                </div>
-
-
+                <table class="table table-condensed" id="goodschedulestabla" width="100%">
+                    <thead  width="100%">
+                        <tr>
+                            <th style="width:3%">ID</th>
+                            <th style="width:7%">Origin</th>
+                            <th style="width:7%">Destination</th>
+                            <th style="width:5%">Carrier</th>
+                            <th style="width:5%">Vessel</th>
+                            <th style="width:3%">Voyage</th>
+                            <th style="width:20%">Route Type</th>
+                            <th style="width:10%">Via</th>
+                            <th style="width:10%">Etd</th>
+                            <th style="width:10%">Eta</th>
+                            <th style="width:10%">Transit Time</th>
+                            <th style="width:5%">Options</th>
+                        </tr>
+                    </thead>
+                </table>    
             </div>
         </div>
     </div>
@@ -129,35 +91,38 @@
 @section('js-inferior')
 @parent
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-        <script>
-            $(function() {
-                $('#goodschedulestabla').DataTable({
-                    processing: true,
-                    ajax: '{!! route("schedule.create") !!}',
-                    columns: [
-                        { data: 'surchargelb', name: 'surchargelb' },
-                        { data: 'origin_portLb', name: 'origin_portLb' },
-                        { data: 'destiny_portLb', name: 'destiny_portLb' },
-                        { data: 'typedestinylb', name: "typedestinylb" },
-                        { data: 'calculationtypelb', name: 'calculationtypelb' },
-                        { data: 'ammount', name: "ammount" },
-                        { data: 'currencylb', name: 'currencylb' },
-                        { data: 'carrierlb', name: 'carrierlb' },
-                        { data: 'action', name: 'action', orderable: false, searchable: false },
-                    ],
-                    "lengthChange": false,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "deferLoading": 57,
-                    "autoWidth": true,
-                    "processing": true,
-                    "dom": 'Bfrtip',
-                    "paging": true,
-                   //"scrollX": true,
-                });
+<script>
+    $(function() {
+        $('#goodschedulestabla').DataTable({
+            processing: true,
+            ajax: '{!! route("schedule.create") !!}',
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'origin', name: 'origin_portLb' },
+                { data: 'destination', name: 'destination' },
+                { data: 'carrier_id', name: "carrier_id" },
+                { data: 'vessel', name: 'vessel' },
+                { data: 'voyage', name: "voyage" },
+                { data: 'route_type', name: 'route_type' },
+                { data: 'via', name: 'via' },
+                { data: 'etd', name: 'etd' },
+                { data: 'eta', name: 'eta' },
+                { data: 'transit_time', name: 'transit_time' },
+                { data: 'action', name: 'action', orderable: false, searchable: false },
+            ],
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "deferLoading": 57,
+            "autoWidth": true,
+            "processing": true,
+            "dom": 'Bfrtip',
+            "paging": true,
+            //"scrollX": true,
+        });
 
-               /* $('#failedschedules').DataTable({
+        /* $('#failedschedules').DataTable({
                     processing: true,
                     //serverSide: true,
                     ajax: '',
@@ -183,7 +148,7 @@
                     "paging": true,
                    //"scrollX": true,
                 }); */
-            });
-           </script>
+    });
+</script>
 @endsection
 @stop

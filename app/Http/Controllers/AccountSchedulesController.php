@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\AccountSchedule;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+
 
 class AccountSchedulesController extends Controller
 {
@@ -23,7 +26,24 @@ class AccountSchedulesController extends Controller
      */
     public function create()
     {
-        //
+        $accounts = AccountSchedule::all();
+
+        return DataTables::of($accounts)
+            ->editColumn('date', function ($accounts){ 
+                return \date( 'd-m-Y',strtotime($accounts['date']));
+            })
+            ->addColumn('action', function ($accounts) {
+                return '<!--<a href="#" class="" onclick="showModalsavetosurcharge('.$accounts['id'].','.$accounts['name'].')"><i class="fa fa-edit"></i></a>-->
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <a href="#" class="delete-account" data-id-account="'.$accounts['id'].'" ><i class="fa fa-trash"></i></a>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <a href="/Schedules/schedule/'.$accounts['id'].'" class=""><i class="fa fa-eye"></i></a>';
+            })
+            ->editColumn('id', '{{$id}}')->toJson();
     }
 
     /**
@@ -80,5 +100,16 @@ class AccountSchedulesController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+      public function eliminar($id)
+    {
+        try{
+            $account = AccountSchedule::find($id);
+            $account->delete();
+            return 1;
+        }catch(\Exception $e){
+            return 2;
+        }
     }
 }

@@ -34,11 +34,13 @@ Route::middleware(['auth'])->prefix('Importation')->group(function () {
 });
 
 
-Route::middleware(['auth'])->prefix('AcountsS')->group(function () {
-   Route::resource('acountS','AccountSchedulesController');
+Route::middleware(['auth'])->prefix('AcountS')->group(function () {
+   Route::get('/AccountDelete/{id}','AccountSchedulesController@eliminar')->name('account.delete');
+   Route::resource('AcountS','AccountSchedulesController');
 });
 
 Route::middleware(['auth'])->prefix('Schedules')->group(function () {
+   Route::get('/SchedulesGoodFailed/{id}/{selector}','SchedulesController@GoodAndFailedSchedules')->name('good.failed.schedules');
    Route::resource('schedule','SchedulesController');
 });
 

@@ -90,7 +90,7 @@ Simple Link
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a href="{{route('acountS.index')}}" class="nav-link" title="Acounts Schedules">
+                     <a href="{{route('AcountS.index')}}" class="nav-link" title="Acounts Schedules">
                         <i class="nav-icon fa fa-clipboard-list"></i>
                         <p>
                            Acounts Schedules

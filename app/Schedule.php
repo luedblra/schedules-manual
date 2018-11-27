@@ -29,7 +29,10 @@ class Schedule extends Model
       return $this->belongsTo('App\Harbor','origin');
    }
    
-   public function destination(){
+   public function destiny(){
       return $this->belongsTo('App\Harbor','destination');
+   }
+    public function routetype(){
+      return $this->belongsTo('App\RouteType','route_type');
    }
 }

@@ -66,7 +66,7 @@
 
          <div class="card-body">
 
-            <table class="table table-condensed" id="goodschedulestabla" width="100%">
+            <table class="table table-condensed" id="accounttabla" width="100%">
                <thead  width="100%">
                   <tr>
                      <th>ID</th>
@@ -84,5 +84,73 @@
 @section('js-inferior')
 @parent
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script>
+    $(function() {
+        $('#accounttabla').DataTable({
+            processing: true,
+            ajax: '{!! route("AcountS.create") !!}',
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'name' },
+                { data: 'date', name: 'date' },
+                { data: 'action', name: 'action', orderable: false, searchable: false },
+            ],
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "deferLoading": 57,
+            "autoWidth": true,
+            "processing": true,
+            "dom": 'Bfrtip',
+            "paging": true,
+            //"scrollX": true,
+        });
+
+ $(document).on('click','.delete-account', function(e){
+      var elemento = $(this);
+      var id = $(elemento).attr('data-id-account'); 
+      swal({
+         title: 'Are you sure?',
+         text: "You won't be able to revert this! Id: "+id,
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Yes, delete it!',
+         cancelButtonText: 'No, cancel!',
+         reverseButtons: true
+      }).then(function(result){
+         if (result.value) {
+
+            url='{!! route("account.delete",":id") !!}';
+            url = url.replace(':id', id);
+            // $(this).closest('tr').remove();
+            $.ajax({
+               url:url,
+               method:'get',
+               success: function(data){
+                  if(data == 1){
+                     swal(
+                        'Deleted!',
+                        'Your rate has been deleted.',
+                        'success'
+                     )
+                     $(elemento).closest('tr').remove();
+
+                  }else if(data == 2){
+                     swal("Error!", "an internal error occurred!", "error");
+                  }
+               }
+            });
+         } else if (result.dismiss === 'cancel') {
+            swal(
+               'Cancelled',
+               'Your rate is safe :)',
+               'error'
+            )
+         }
+      });
+   });
+    });
+</script>
 @endsection
 @stop

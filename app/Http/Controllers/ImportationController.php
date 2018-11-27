@@ -12,6 +12,7 @@ use App\RouteType;
 use App\FailedSchedule;
 use App\AccountSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImportationController extends Controller
 {
@@ -413,6 +414,10 @@ class ImportationController extends Controller
                     $request->session()->flash('message.nivel', 'success');
                     $request->session()->flash('message.icon', 'check');
                 }
+                $fileobj = FileTmp::where('account_schedules_id',$accountidR)->first();
+                Storage::delete($fileobj['namefile']);
+                $fileobj->delete();
+                
             });
         $request->session()->flash('message.title', 'Well done!');
         return redirect()->route('schedule.index');
