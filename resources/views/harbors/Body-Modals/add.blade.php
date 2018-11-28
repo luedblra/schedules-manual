@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/AdminLTE/plugins/select2/select2.min.css">
+<link rel="stylesheet" href="/css/select2.css">
 {!! Form::open(['route' => 'UploadFile.store','method' => 'POST']) !!}
 <div class="form-group row">
     <div class="col-lg-4">
@@ -30,7 +32,7 @@
         <label for="countryMD" class="form-control-label">
             Country:
         </label>
-        {!! Form::select('country',$country,null,['id' => 'countryMD', 'class' => 'm-select2-general form-control'])!!}
+        {!! Form::select('country',$country,null,['id' => 'countryMD', 'class' => 'select2 form-control'])!!}
     </div>
     <div class="col-lg-1">
     </div>
@@ -59,9 +61,9 @@
     </button>
 </div>
 {!! Form::close() !!}
-
+<script src="/AdminLTE/plugins/select2/select2.full.js"></script>
 <script>
-    $('.m-select2-general').select2({
-
-    });
+   $('.select2').select2({
+      placeholder: "Select an option"
+   });
 </script>

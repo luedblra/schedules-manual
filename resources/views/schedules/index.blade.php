@@ -149,6 +149,51 @@
                    //"scrollX": true,
                 }); */
     });
+   $(document).on('click','.delete-failedschedule', function(e){
+   
+   
+      var elemento = $(this);
+      var id = $(elemento).attr('data-id-failedschedule'); 
+      swal({
+         title: 'Are you sure?',
+         text: "You won't be able to revert this! Id: "+id,
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Yes, delete it!',
+         cancelButtonText: 'No, cancel!',
+         reverseButtons: true
+      }).then(function(result){
+         if (result.value) {
+
+            url='{!! route("schedule.delete",":id") !!}';
+            url = url.replace(':id',id);
+            // $(this).closest('tr').remove();
+            $.ajax({
+               url:url,
+               method:'get',
+               success: function(data){
+                  if(data == 1){
+                     swal(
+                        'Deleted!',
+                        'Your rate has been deleted.',
+                        'success'
+                     )
+                     $(elemento).closest('tr').remove();
+
+                  }else if(data == 2){
+                     swal("Error!", "an internal error occurred!", "error");
+                  }
+               }
+            });
+         } else if (result.dismiss === 'cancel') {
+            swal(
+               'Cancelled',
+               'Your rate is safe :)',
+               'error'
+            )
+         }
+      });
+   });
 </script>
 @endsection
 @stop

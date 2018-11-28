@@ -41,6 +41,8 @@ Route::middleware(['auth'])->prefix('AcountS')->group(function () {
 
 Route::middleware(['auth'])->prefix('Schedules')->group(function () {
    Route::get('/SchedulesGoodFailed/{id}/{selector}','SchedulesController@GoodAndFailedSchedules')->name('good.failed.schedules');
+   Route::get('/ScheduleDelete/{id}','SchedulesController@eliminar')->name('schedule.delete');
+   Route::get('/ShowModal/{id}/{selector}','SchedulesController@ShowModal')->name('show.modal.schedules');
    Route::resource('schedule','SchedulesController');
 });
 

@@ -85,29 +85,30 @@
 @parent
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script>
-    $(function() {
-        $('#accounttabla').DataTable({
-            processing: true,
-            ajax: '{!! route("AcountS.create") !!}',
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'name', name: 'name' },
-                { data: 'date', name: 'date' },
-                { data: 'action', name: 'action', orderable: false, searchable: false },
-            ],
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "deferLoading": 57,
-            "autoWidth": true,
-            "processing": true,
-            "dom": 'Bfrtip',
-            "paging": true,
-            //"scrollX": true,
-        });
+   $(function() {
+      $('#accounttabla').DataTable({
+         processing: true,
+         ajax: '{!! route("AcountS.create") !!}',
+         columns: [
+            { data: 'id', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'date', name: 'date' },
+            { data: 'action', name: 'action', orderable: false, searchable: false },
+         ],
+         "lengthChange": false,
+         "searching": true,
+         "ordering": true,
+         "info": true,
+         "deferLoading": 57,
+         "autoWidth": true,
+         "processing": true,
+         "dom": 'Bfrtip',
+         "paging": true,
+         //"scrollX": true,
+      });
 
- $(document).on('click','.delete-account', function(e){
+   });
+   $(document).on('click','.delete-account', function(e){
       var elemento = $(this);
       var id = $(elemento).attr('data-id-account'); 
       swal({
@@ -150,7 +151,6 @@
          }
       });
    });
-    });
 </script>
 @endsection
 @stop
