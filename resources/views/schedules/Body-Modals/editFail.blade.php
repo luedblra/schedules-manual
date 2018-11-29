@@ -65,13 +65,13 @@
       <label for="etdid" class="form-control-label" style="{{$data['etdClass']}}">
          Etd:
       </label>
-      <input type="text" name="etd"  value="{{$data['etd']}}" class="form-control" id="etdid">
+      {!! Form::date('etd',$data['etd'],['class' => 'form-control'])!!}
    </div>
    <div class="col-lg-4" >
       <label for="etaid" class="form-control-label" style="{{$data['etaClass']}}" >
          Eta:
       </label>
-      <input type="text" name="eta" value="{{$data['eta']}}" class="form-control" id="etaid">
+      {!! Form::date('eta',$data['eta'],['class' => 'form-control'])!!}
    </div>
 </div>
 <div class="form-group row">
@@ -82,8 +82,8 @@
       <input type="text" name="transittime"  value="{{$data['transit_time']}}" class="form-control" id="transittimeid">
    </div>
 </div>
-      <input type="hidden" name="account_id"  value="{{$data['account_id']}}" class="form-control" id="accountidid">
-
+<input type="hidden" name="account_id"  value="{{$data['account_id']}}" class="form-control" id="accountidid">
+<input type="hidden" name="selector"  value="{{$selectorRet}}" class="form-control" id="selectorid">
 <hr>
 <div class="form-group pull-right" >
    <button type="submit" class="btn btn-primary">

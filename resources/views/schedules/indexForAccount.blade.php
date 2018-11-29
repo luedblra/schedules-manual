@@ -151,18 +151,20 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script>
 
-   function showModal(selector,id){
+   function showModal(selector,id,selectorRet){
       if(selector == 1){
-         var url = '{{ route("show.modal.schedules",[":id",":selector"]) }}';
+         var url = '{{ route("show.modal.schedules",[":id",":selector",":selectorRet"]) }}';
          url = url.replace(':id',id);
          url = url.replace(':selector',selector);
+         url = url.replace(':selectorRet',selectorRet);
          $('#modal-body').load(url,function(){
             $('#update').modal();
          });
       } else if(selector == 2){
-         var url = '{{ route("show.modal.schedules",[":id",":selector"]) }}';
+         var url = '{{ route("show.modal.schedules",[":id",":selector",":selectorRet"]) }}';
          url = url.replace(':id',id);
          url = url.replace(':selector',selector);
+         url = url.replace(':selectorRet',selectorRet);
          $('#modal-body').load(url,function(){
             $('#update').modal();
          });
@@ -228,6 +230,94 @@
          "paging": true,
          //"scrollX": true
       }); 
+   });
+
+   $(document).on('click','.delete-schedule', function(e){
+      var elemento = $(this);
+      var id = $(elemento).attr('data-id-schedule'); 
+      swal({
+         title: 'Are you sure?',
+         text: "You won't be able to revert this! Id: "+id,
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Yes, delete it!',
+         cancelButtonText: 'No, cancel!',
+         reverseButtons: true
+      }).then(function(result){
+         if (result.value) {
+
+            url='{!! route("schedule.delete",[":id",1]) !!}';
+            url = url.replace(':id',id);
+            // $(this).closest('tr').remove();
+            $.ajax({
+               url:url,
+               method:'get',
+               success: function(data){
+                  if(data == 1){
+                     swal(
+                        'Deleted!',
+                        'Your rate has been deleted.',
+                        'success'
+                     )
+                     $(elemento).closest('tr').remove();
+
+                  }else if(data == 2){
+                     swal("Error!", "an internal error occurred!", "error");
+                  }
+               }
+            });
+         } else if (result.dismiss === 'cancel') {
+            swal(
+               'Cancelled',
+               'Your rate is safe :)',
+               'error'
+            )
+         }
+      });
+   });
+
+   $(document).on('click','.delete-failedschedule', function(e){
+      var elemento = $(this);
+      var id = $(elemento).attr('data-id-failedschedule'); s
+      swal({
+         title: 'Are you sure?',
+         text: "You won't be able to revert this! Id: "+id,
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Yes, delete it!',
+         cancelButtonText: 'No, cancel!',
+         reverseButtons: true
+      }).then(function(result){
+         if (result.value) {
+
+            url='{!! route("schedule.delete",[":id",2]) !!}';
+            url = url.replace(':id',id);
+            // $(this).closest('tr').remove();
+            $.ajax({
+               url:url,
+               method:'get',
+               success: function(data){
+                  if(data == 1){
+                     swal(
+                        'Deleted!',
+                        'Your rate has been deleted.',
+                        'success'
+                     )
+                     $(elemento).closest('tr').remove();
+
+                  }else if(data == 2){
+                     swal("Error!", "an internal error occurred!", "error");
+                  }
+               }
+            });
+         } else if (result.dismiss === 'cancel') {
+            swal(
+               'Cancelled',
+               'Your rate is safe :)',
+               'error'
+            )
+         }
+      });
    });
 </script>
 @endsection

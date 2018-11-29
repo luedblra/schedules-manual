@@ -23,11 +23,7 @@ class SchedulesController extends Controller
       return view('schedules.index');
    }
 
-   /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
    public function create()
    {
       $schedules = Schedule::with('carrier','origen','destiny','routetype')->get();
@@ -47,30 +43,45 @@ class SchedulesController extends Controller
             return $schedules['routetype']['name'];
          })
          ->addColumn('action', function ($schedules) {
-            return '<a href="#" class="" onclick="showModalsavetosurcharge('.$schedules['id'].','.$schedules['origin'].')"><i class="la la-edit"></i></a>
+            return '<a href="#" class="" onclick="showModal(1,'.$schedules['id'].',1)"><i class="fa fa-edit"></i></a>
                 &nbsp;
-                <a href="#" id="delete-Fail-Surcharge" data-id-failSurcharge="'.$schedules['id'].'" class=""><i class="la la-remove"></i></a>';
+                <a href="#" data-id-schedule="'.$schedules['id'].'" class="delete-schedule"><i class="fa fa-trash"></i></a>';
          })
          ->editColumn('id', '{{$id}}')->toJson();
    }
 
-   /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+   public function createtwo()
+   {
+      $carriers   = Carrier::all()->pluck('name','id');
+      $routetypes = RouteType::all()->pluck('name','id');
+      $harbors    = Harbor::all()->pluck('name','id');
+      return view('schedules.Body-Modals.add',compact('carriers','routetypes','harbors'));
+   }
    public function store(Request $request)
    {
-      //
+      $schedule = new Schedule();
+      $schedule->origin                = $request->origin;
+      $schedule->destination           = $request->destination;
+      $schedule->carrier_id            = $request->carrier;
+      $schedule->vessel                = $request->vessel;
+      $schedule->voyage                = $request->voyage;
+      $schedule->route_type            = $request->routetype;
+      $schedule->via                   = $request->via;
+      $schedule->etd                   = $request->etd;
+      $schedule->eta                   = $request->eta;
+      $schedule->transit_time          = $request->transittime;
+      $schedule->account_schedules_id  = $request->account_id;
+      $schedule->save();
+
+      $request->session()->flash('message.nivel', 'success');
+      $request->session()->flash('message.icon', 'check');
+      $request->session()->flash('message.title', 'Well done!');
+      
+      return redirect()->route('schedule.index');
    }
 
-   /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
    public function show($id){
       return view('schedules.indexForAccount',compact('id'));
    }
@@ -95,9 +106,9 @@ class SchedulesController extends Controller
                return $schedules['routetype']['name'];
             })
             ->addColumn('action', function ($schedules) {
-               return '<a href="#" class="" onclick="showModalsavetosurcharge('.$schedules['id'].','.$schedules['origin'].')"><i class="la la-edit"></i></a>
+               return '<a href="#" class="" onclick="showModal(1,'.$schedules['id'].',2)"><i class="fa fa-edit"></i></a>
                 &nbsp;
-                <a href="#" id="delete-Fail-Surcharge" data-id-failSurcharge="'.$schedules['id'].'" class=""><i class="la la-remove"></i></a>';
+                <a href="#" id="" data-id-schedule="'.$schedules['id'].'" class="delete-schedule"><i class="fa fa-trash"></i></a>';
             })
             ->editColumn('id', '{{$id}}')->toJson();
       } else if($selector == 2){
@@ -223,7 +234,7 @@ class SchedulesController extends Controller
 
 
          return DataTables::of($colleccion)->addColumn('action', function ($colleccion) {
-            return '<a href="#" class="" onclick="showModal(2,'.$colleccion['id'].')"><i class="fa fa-edit"></i></a>
+            return '<a href="#" class="" onclick="showModal(2,'.$colleccion['id'].',3)"><i class="fa fa-edit"></i></a>
                 &nbsp;
                 <a href="#" id="" data-id-failedschedule="'.$colleccion['id'].'" class="delete-failedschedule"><i class="fa fa-trash"></i></a>';
          })
@@ -232,12 +243,18 @@ class SchedulesController extends Controller
    }
 
 
-   public function ShowModal($id,$selector)
+   public function ShowModal($id,$selector,$selectorRet)
    {
+
+      $carriers   = Carrier::all()->pluck('name','id');
+      $routetypes = RouteType::all()->pluck('name','id');
+      $harbors    = Harbor::all()->pluck('name','id');
 
       if($selector == 1){
          $schedule = '';
          $schedule = Schedule::find($id);
+         //dd($schedule);
+         return view('schedules.Body-Modals.edit',compact('schedule','carriers','routetypes','harbors','selectorRet'));
 
       } else{
          $failedschedule = '';
@@ -390,10 +407,8 @@ class SchedulesController extends Controller
          ];
 
          //dd($data);
-         $carriers   = Carrier::all()->pluck('name','id');
-         $routetypes = RouteType::all()->pluck('name','id');
-         $harbors    = Harbor::all()->pluck('name','id');
-         return view('schedules.Body-Modals.editFail',compact('data','carriers','routetypes','harbors'));
+
+         return view('schedules.Body-Modals.editFail',compact('data','carriers','routetypes','harbors','selectorRet'));
       }
 
 
@@ -408,28 +423,55 @@ class SchedulesController extends Controller
    public function update(Request $request, $id)
    {
       //dd($request->all());
+      if($request->selector == 1){
 
-      $schedule = new Schedule();
-      $schedule->origin                = $request->origin;
-      $schedule->destination           = $request->destination;
-      $schedule->carrier_id            = $request->carrier;
-      $schedule->vessel                = $request->vessel;
-      $schedule->voyage                = $request->voyage;
-      $schedule->route_type            = $request->routetype;
-      $schedule->via                   = $request->via;
-      $schedule->etd                   = $request->etd;
-      $schedule->eta                   = $request->eta;
-      $schedule->transit_time          = $request->transittime;
-      $schedule->account_schedules_id  = $request->account_id;
-      $schedule->save();
+         $schedule = Schedule::find($id);
+         $schedule->origin                = $request->origin;
+         $schedule->destination           = $request->destination;
+         $schedule->carrier_id            = $request->carrier;
+         $schedule->vessel                = $request->vessel;
+         $schedule->voyage                = $request->voyage;
+         $schedule->route_type            = $request->routetype;
+         $schedule->via                   = $request->via;
+         $schedule->etd                   = $request->etd;
+         $schedule->eta                   = $request->eta;
+         $schedule->transit_time          = $request->transittime;
+         $schedule->update();
 
-      $failedschedule = FailedSchedule::find($id);
-      $failedschedule->delete();
+      } else if ($request->selector == 2){
+
+         $schedule = new Schedule();
+         $schedule->origin                = $request->origin;
+         $schedule->destination           = $request->destination;
+         $schedule->carrier_id            = $request->carrier;
+         $schedule->vessel                = $request->vessel;
+         $schedule->voyage                = $request->voyage;
+         $schedule->route_type            = $request->routetype;
+         $schedule->via                   = $request->via;
+         $schedule->etd                   = $request->etd;
+         $schedule->eta                   = $request->eta;
+         $schedule->transit_time          = $request->transittime;
+         $schedule->account_schedules_id  = $request->account_id;
+         $schedule->save();
+
+         $failedschedule = FailedSchedule::find($id);
+         $failedschedule->delete();
+
+      }
 
       $request->session()->flash('message.nivel', 'success');
       $request->session()->flash('message.icon', 'check');
       $request->session()->flash('message.title', 'Well done!');
-      return redirect()->route('schedule.show',$request->account_id);
+
+      if($request->selector == 1){
+         if($request->selectorRet == 1){
+            return redirect()->route('schedule.index');
+         } else if ($request->selectorRet == 2){
+            return redirect()->route('schedule.show',$request->account_id);
+         }
+      } else if ($request->selector == 2){
+         return redirect()->route('schedule.show',$request->account_id);
+      }
    }
 
 
@@ -438,14 +480,25 @@ class SchedulesController extends Controller
       //
    }
 
-   public function eliminar($id)
+   public function eliminar($id,$selector)
    {
-      //try{
-         $failedschedule = FailedSchedule::find($id);
-         $failedschedule->delete();
-         return 1;
-      /*}catch(\Exception $e){
-         return 2;
-      }*/
+      if($selector == 1){
+         try{
+            $schedule = Schedule::find($id);
+            $schedule->delete();
+            return 1;
+         }catch(\Exception $e){
+            return 2;
+         }
+      } else if($selector == 2){
+
+         try{
+            $failedschedule = FailedSchedule::find($id);
+            $failedschedule->delete();
+            return 1;
+         }catch(\Exception $e){
+            return 2;
+         }
+      }
    }
 }
