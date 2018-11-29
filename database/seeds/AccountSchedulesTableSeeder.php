@@ -22,6 +22,7 @@ class AccountSchedulesTableSeeder extends Seeder
                 'id' => 1,
                 'name' => 'Manual Insertion',
                 'date' => '2018-11-23',
+                'user_id' => 1,
                 'created_at' => '2018-11-23 00:00:00',
                 'updated_at' => '2018-11-23 00:00:00',
             ),

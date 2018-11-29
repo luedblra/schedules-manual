@@ -278,7 +278,7 @@
 
    $(document).on('click','.delete-failedschedule', function(e){
       var elemento = $(this);
-      var id = $(elemento).attr('data-id-failedschedule'); s
+      var id = $(elemento).attr('data-id-failedschedule'); 
       swal({
          title: 'Are you sure?',
          text: "You won't be able to revert this! Id: "+id,

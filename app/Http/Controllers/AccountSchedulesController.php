@@ -26,11 +26,14 @@ class AccountSchedulesController extends Controller
      */
    public function create()
    {
-      $accounts = AccountSchedule::all();
+      $accounts = AccountSchedule::with('user')->get();
 
       return DataTables::of($accounts)
          ->editColumn('date', function ($accounts){ 
             return \date( 'd-m-Y',strtotime($accounts['date']));
+         })
+         ->editColumn('user_id', function ($accounts){ 
+            return $accounts['user']['name'];
          })
          ->addColumn('action', function ($accounts) {
             if($accounts['id'] != 1){

@@ -15,8 +15,12 @@ class AddAccountSchedulesTable extends Migration
    {
       Schema::create('account_schedules', function (Blueprint $table) {
          $table->increments('id');
+         $table->integer('countschedule')->default(0);
+         $table->integer('countfailedschedule')->default(0);
          $table->string('name');
          $table->date('date');
+         $table->integer('user_id')->unsigned();
+         $table->foreign('user_id')->references('id')->on('users');
          $table->timestamps();
       });
    }

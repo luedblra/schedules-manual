@@ -83,7 +83,8 @@
    </div>
 </div>
 <input type="hidden" name="account_id"  value="{{$data['account_id']}}" class="form-control" id="accountidid">
-<input type="hidden" name="selector"  value="{{$selectorRet}}" class="form-control" id="selectorid">
+<input type="hidden" name="selector"  value="2" class="form-control" id="selectorid">
+<input type="hidden" name="selectorRet"  value="{{$selectorRet}}" class="form-control" id="selectorid">
 <hr>
 <div class="form-group pull-right" >
    <button type="submit" class="btn btn-primary">
