@@ -8,6 +8,7 @@ use App\Carrier;
 use App\Schedule;
 use App\RouteType;
 use App\FailedSchedule;
+use App\AccountSchedule;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -74,10 +75,14 @@ class SchedulesController extends Controller
       $schedule->account_schedules_id  = $request->account_id;
       $schedule->save();
 
+      $accountcount =  AccountSchedule::find($request->account_id);
+      $accountcount->countschedule       = $accountcount['countschedule'] + 1;
+      $accountcount->update();
+
       $request->session()->flash('message.nivel', 'success');
       $request->session()->flash('message.icon', 'check');
       $request->session()->flash('message.title', 'Well done!');
-      
+
       return redirect()->route('schedule.index');
    }
 
@@ -453,7 +458,12 @@ class SchedulesController extends Controller
          $schedule->transit_time          = $request->transittime;
          $schedule->account_schedules_id  = $request->account_id;
          $schedule->save();
-
+         
+         $accountcount =  AccountSchedule::find($request->account_id);
+         $accountcount->countschedule       = $accountcount['countschedule'] + 1;
+         $accountcount->countfailedschedule = $accountcount['countfailedschedule'] - 1;
+         $accountcount->update();
+         
          $failedschedule = FailedSchedule::find($id);
          $failedschedule->delete();
 
@@ -485,6 +495,9 @@ class SchedulesController extends Controller
       if($selector == 1){
          try{
             $schedule = Schedule::find($id);
+            $accountcount =  AccountSchedule::find($schedule['account_schedules_id']);
+            $accountcount->countschedule = $accountcount['countschedule'] - 1;
+            $accountcount->update();
             $schedule->delete();
             return 1;
          }catch(\Exception $e){
@@ -494,6 +507,9 @@ class SchedulesController extends Controller
 
          try{
             $failedschedule = FailedSchedule::find($id);
+            $accountcount =  AccountSchedule::find($failedschedule['account_schedules_id']);
+            $accountcount->countfailedschedule = $accountcount['countfailedschedule'] - 1;
+            $accountcount->update();
             $failedschedule->delete();
             return 1;
          }catch(\Exception $e){
