@@ -27,10 +27,13 @@ class AccountSchedulesController extends Controller
    public function create()
    {
       $accounts = AccountSchedule::with('user')->get();
-
+      //dd($accounts);
       return DataTables::of($accounts)
          ->editColumn('date', function ($accounts){ 
             return \date( 'd-m-Y',strtotime($accounts['date']));
+         })
+         ->addColumn('done', function ($accounts){ 
+            return $accounts['countschedule'] + $accounts['countfailedschedule'];
          })
          ->editColumn('user_id', function ($accounts){ 
             return $accounts['user']['name'];

@@ -74,6 +74,7 @@
                      <th>Date</th>
                      <th style="color:red">Failed</th>
                      <th style="color:green">Good</th>
+                     <th style="color:blue">Done</th>
                      <th>User</th>
                      <th>Options</th>
                   </tr>
@@ -98,6 +99,7 @@
             { data: 'date', name: 'date' },
             { data: 'countfailedschedule', name: 'countfailedschedule' },
             { data: 'countschedule', name: 'countschedule' },
+            { data: 'done', name: 'done' },
             { data: 'user_id', name: 'user_id' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
          ],
