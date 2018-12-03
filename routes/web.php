@@ -47,7 +47,7 @@ Route::middleware(['auth'])->prefix('Schedules')->group(function () {
    Route::resource('schedule','SchedulesController');
 });
 
-Route::middleware(['auth'])->prefix('schedule')->group(function () {
+Route::middleware(['auth'])->prefix('scheduleAPI')->group(function () {
    Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->name('all.expecifict');
    Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier');
 });
