@@ -47,7 +47,7 @@ Route::middleware(['auth'])->prefix('Schedules')->group(function () {
    Route::resource('schedule','SchedulesController');
 });
 
-Route::middleware(['auth'])->prefix('scheduleAPI')->group(function () {
+Route::middleware(['auth'])->prefix('scheduleAPIWEB')->group(function () {
    Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->name('all.expecifict');
    Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier');
 });
@@ -56,3 +56,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+use App\User;
+use App\Http\Resources\User as UserResource;
+
+Route::get('/user', function () {
+    return new UserResource(User::find(1));
+});

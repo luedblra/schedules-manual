@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('auth:api')->prefix('scheduleAPI')->group(function () {
+   Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict');
+   Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier');
+});

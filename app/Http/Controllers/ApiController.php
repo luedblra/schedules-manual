@@ -8,6 +8,7 @@ use App\Schedule;
 use App\RouteType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\ScheduleResource;
 
 class ApiController extends Controller
 {
@@ -36,7 +37,10 @@ class ApiController extends Controller
         } else {
             $schedules = [];
         }
-        return response()->json($schedules);
+        
+        return new ScheduleResource($schedules);
+        
+        //return response()->json($schedules);
     }
 
     public function ForCarrier($carrier){
@@ -47,6 +51,9 @@ class ApiController extends Controller
         } else {
             $schedules = [];
         }
-        return response()->json($schedules);
+        
+        return new ScheduleResource($schedules);
+        
+        //return response()->json($schedules);
     }
 }
