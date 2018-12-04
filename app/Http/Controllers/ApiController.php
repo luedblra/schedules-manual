@@ -16,8 +16,8 @@ class ApiController extends Controller
         $destinationBol = false;
         $carrierBol     = false;
 
-        $origin        = Harbor::where('name',$origin)->orWhere('id',$origin)->first();
-        $destination   = Harbor::where('name',$destination)->orWhere('id',$destination)->first();
+        $origin        = Harbor::where('code',$origin)->orWhere('id',$origin)->first();
+        $destination   = Harbor::where('code',$destination)->orWhere('id',$destination)->first();
         $carrier       = Carrier::where('name',$carrier)->orWhere('id',$carrier)->first();
 
         if(count($origin) == 1){
