@@ -14,13 +14,13 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::group(['middleware' => 'auth:api'], function() {
-   Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict');
-   Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier');
+   return $request->user();
 });
 
 
-//https://medium.com/@cvallejo/sistema-de-autenticaci%C3%B3n-api-rest-con-laravel-5-6-240be1f3fc7d
+Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->middleware('auth:api');
+Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier')->middleware('auth:api');
+
+
+
+//https://scotch.io/@neo/getting-started-with-laravel-passport

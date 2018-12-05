@@ -46,12 +46,12 @@ Route::middleware(['auth'])->prefix('Schedules')->group(function () {
    Route::get('/CreateTwo','SchedulesController@createtwo')->name('createtwo.modal.schedules');
    Route::resource('schedule','SchedulesController');
 });
-
+/*
 Route::middleware(['auth'])->prefix('scheduleAPIWEB')->group(function () {
    Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->name('all.expecifict');
    Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier');
 });
-
+*/
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
