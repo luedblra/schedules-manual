@@ -48,15 +48,15 @@ Route::middleware(['auth'])->prefix('Schedules')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('PasswordGT')->group(function () {
+    Route::get('/passwordGTDelete/{id}','PasswordGrantTokenController@eliminar')->name('password.delete');
     Route::get('/CreateTwoPass','PasswordGrantTokenController@createtwo')->name('createtwo.modal.password');
     Route::resource('passwordGT','PasswordGrantTokenController');
 });
 
 Route::get('create-passport-client', function () {
     Artisan::call('passport:client', 
-        ['--password' => 1, '--name' => 'AccessTokenName' ]
+        ['--password' => 1, '--name' => 'Password Grant Tokens' ]
     );
-
     return redirect()->route('passwordGT.index');
 })->middleware(['auth'])->name('create.passport.client');
 

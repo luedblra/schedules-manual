@@ -12,7 +12,7 @@
          Origin:
       </label>
       <div class="form-group" >
-         {!! Form::select('origin',$harbors,$schedule['origin'],['id' => 'originid', 'class' => 'form-control select2'])!!}
+         {!! Form::select('origin',$harbors,$schedule['origin'],['id' => 'originid', 'class' => 'form-control select2','required'])!!}
       </div>
    </div>
    <div class="col-lg-4">
@@ -20,7 +20,7 @@
          Destination:
       </label>
       <div class="form-group">
-         {!! Form::select('destination',$harbors,$schedule['destination'],['id' => 'destinationid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('destination',$harbors,$schedule['destination'],['id' => 'destinationid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
    <div class="col-lg-4">
@@ -28,7 +28,7 @@
          Carrier:
       </label>
       <div class="form-group">
-         {!! Form::select('carrier',$carriers,$schedule['carrier_id'],['id' => 'carrierid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('carrier',$carriers,$schedule['carrier_id'],['id' => 'carrierid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
 </div>
@@ -37,7 +37,7 @@
       <label for="vesselid" class="form-control-label" >
          Vessel:
       </label>
-      <input type="text" name="vessel"  value="{{$schedule['vessel']}}" class="form-control" id="vesselid">
+      <input type="text" name="vessel" required value="{{$schedule['vessel']}}" class="form-control" id="vesselid">
    </div>
    <div class="col-lg-4" >
       <label for="voyageid" class="form-control-label">
@@ -50,7 +50,7 @@
          Route Type:
       </label>
       <div class="form-group">
-         {!! Form::select('routetype',$routetypes,$schedule['route_type'],['id' => 'routetypeid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('routetype',$routetypes,$schedule['route_type'],['id' => 'routetypeid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
 </div>
@@ -65,13 +65,13 @@
       <label for="etdid" class="form-control-label">
          Etd:
       </label>
-       {!! Form::date('etd',$schedule['etd'],['class' => 'form-control'])!!}
+       {!! Form::date('etd',$schedule['etd'],['class' => 'form-control','required'])!!}
    </div>
    <div class="col-lg-4" >
       <label for="etaid" class="form-control-label" >
          Eta:
       </label>
-       {!! Form::date('eta',$schedule['eta'],['class' => 'form-control'])!!}
+       {!! Form::date('eta',$schedule['eta'],['class' => 'form-control','required'])!!}
    </div>
 </div>
 <div class="form-group row">

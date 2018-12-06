@@ -12,7 +12,7 @@
          Origin:
       </label>
       <div class="form-group" >
-         {!! Form::select('origin',$harbors,$data['origin'],['id' => 'originid', 'class' => 'form-control select2'])!!}
+         {!! Form::select('origin',$harbors,$data['origin'],['id' => 'originid', 'class' => 'form-control select2','required'])!!}
       </div>
    </div>
    <div class="col-lg-4">
@@ -20,7 +20,7 @@
          Destination:
       </label>
       <div class="form-group">
-         {!! Form::select('destination',$harbors,$data['destination'],['id' => 'destinationid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('destination',$harbors,$data['destination'],['id' => 'destinationid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
    <div class="col-lg-4">
@@ -28,7 +28,7 @@
          Carrier:
       </label>
       <div class="form-group">
-         {!! Form::select('carrier',$carriers,$data['carrier'],['id' => 'carrierid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('carrier',$carriers,$data['carrier'],['id' => 'carrierid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
 </div>
@@ -37,7 +37,7 @@
       <label for="vesselid" class="form-control-label" style="{{$data['vesselClass']}}">
          Vessel:
       </label>
-      <input type="text" name="vessel"  value="{{$data['vessel']}}" class="form-control" id="vesselid">
+      <input type="text" name="vessel" required value="{{$data['vessel']}}" class="form-control" id="vesselid">
    </div>
    <div class="col-lg-4" >
       <label for="voyageid" class="form-control-label" style="{{$data['voyageClass']}}" >
@@ -50,7 +50,7 @@
          Route Type:
       </label>
       <div class="form-group">
-         {!! Form::select('routetype',$routetypes,$data['route_type'],['id' => 'routetypeid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('routetype',$routetypes,$data['route_type'],['id' => 'routetypeid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
 </div>
@@ -65,13 +65,13 @@
       <label for="etdid" class="form-control-label" style="{{$data['etdClass']}}">
          Etd:
       </label>
-      {!! Form::date('etd',$data['etd'],['class' => 'form-control'])!!}
+      {!! Form::date('etd',$data['etd'],['class' => 'form-control','required'])!!}
    </div>
    <div class="col-lg-4" >
       <label for="etaid" class="form-control-label" style="{{$data['etaClass']}}" >
          Eta:
       </label>
-      {!! Form::date('eta',$data['eta'],['class' => 'form-control'])!!}
+      {!! Form::date('eta',$data['eta'],['class' => 'form-control','required'])!!}
    </div>
 </div>
 <div class="form-group row">
@@ -79,7 +79,7 @@
       <label for="transittimeid" class="form-control-label" style="{{$data['transittimeClass']}}">
          Transit Time:
       </label>
-      <input type="text" name="transittime"  value="{{$data['transit_time']}}" class="form-control" id="transittimeid">
+      <input type="text" name="transittime"  value="{{$data['transit_time']}}" required class="form-control" id="transittimeid">
    </div>
 </div>
 <input type="hidden" name="account_id"  value="{{$data['account_id']}}" class="form-control" id="accountidid">

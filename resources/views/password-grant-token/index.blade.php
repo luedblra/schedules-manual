@@ -66,10 +66,14 @@
 
             <div class="card-body">
 
-                <div class="col-lg-2">
-                    <button onclick="showModalAdd()" class="btn btn-block btn-outline-primary "> <span class="fa fa-plus"></span> Add</button>
-                    
-                    <a href="{{route('create.passport.client')}}" onclick="showModalAdd()" class="btn btn-block btn-outline-primary "> <span class="fa fa-plus"></span> Add</a>
+                <div class="form-group row">
+                    <div class="col-lg-2">
+                        <button onclick="showModalAdd()" class="btn btn-block btn-outline-primary "> <span class="fa fa-plus"></span> Add IAT</button>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <a href="{{route('create.passport.client')}}" class="btn btn-block btn-outline-primary "> <span class="fa fa-plus"></span> Add PGT</a>
+                    </div>
                 </div>
 
                 <table class="table table-condensed" id="passwordtable" width="100%">
@@ -78,6 +82,8 @@
                             <th style="width:3%">ID</th>
                             <th style="width:7%">Name</th>
                             <th style="width:7%">Secret</th>
+                            <th style="width:5%">Redirect</th>
+                            <th style="width:5%">Password Client</th>
                             <th style="width:5%">Redirect</th>
                             <th style="width:5%">Options</th>
                         </tr>
@@ -122,6 +128,8 @@
                 { data: 'name', name: 'name' },
                 { data: 'secret', name: "secret" },
                 { data: 'redirect', name: "redirect" },
+                { data: 'personal_access_client', name: "personal_access_client" },
+                { data: 'password_client', name: "password_client" },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             "lengthChange": false,
@@ -145,6 +153,50 @@
         });
 
     }
+
+    $(document).on('click','.delete-passwd', function(e){
+        var elemento = $(this);
+        var id = $(elemento).attr('data-id-passwd'); 
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this! Id: "+id,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then(function(result){
+            if (result.value) {
+
+                url='{!! route("password.delete",":id") !!}';
+                url = url.replace(':id',id);
+                // $(this).closest('tr').remove();
+                $.ajax({
+                    url:url,
+                    method:'get',
+                    success: function(data){
+                        if(data == 1){
+                            swal(
+                                'Deleted!',
+                                'Your rate has been deleted.',
+                                'success'
+                            )
+                            $(elemento).closest('tr').remove();
+
+                        }else if(data == 2){
+                            swal("Error!", "an internal error occurred!", "error");
+                        }
+                    }
+                });
+            } else if (result.dismiss === 'cancel') {
+                swal(
+                    'Cancelled',
+                    'Your rate is safe :)',
+                    'error'
+                )
+            }
+        });
+    });
 
 </script>
 @endsection

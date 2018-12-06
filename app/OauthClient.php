@@ -12,8 +12,9 @@ class OauthClient extends Model
         'name',
         'secret',
         'redirect',
+        'personal_access_client',
         'password_client'
     ];
 
-    protected $hidden = ['created_at','updated_at','personal_access_client','revoked'];
+    protected $hidden = ['created_at','updated_at','revoked'];
 }

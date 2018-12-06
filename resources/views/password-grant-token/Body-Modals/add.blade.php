@@ -5,7 +5,7 @@
             Name:
         </label>
         <div class="form-group" >
-            {!! Form::text('name',null,['id' => 'nameid', 'class' => 'form-control '])!!}
+            {!! Form::text('name',null,['id' => 'nameid', 'class' => 'form-control ','required'])!!}
         </div>
     </div> 
     <div class="col-lg-6">
@@ -13,7 +13,7 @@
             Redirect:
         </label>
         <div class="form-group" >
-            {!! Form::text('redirect','http://localhost',['id' => 'redirectid', 'class' => 'form-control '])!!}
+            {!! Form::text('redirect','http://localhost',['id' => 'redirectid', 'class' => 'form-control ','required'])!!}
         </div>
     </div>
 </div>

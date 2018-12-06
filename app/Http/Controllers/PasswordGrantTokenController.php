@@ -29,9 +29,9 @@ class PasswordGrantTokenController extends Controller
 
         return DataTables::of($oauthclient)
             ->addColumn('action', function ($oauthclient) {
-                return '<a href="#" class="" onclick="showModal(1,'.$oauthclient['id'].',1)"><i class="fa fa-edit"></i></a>
-                &nbsp;
-                <a href="#" data-id-schedule="'.$oauthclient['id'].'" class="delete-schedule"><i class="fa fa-trash"></i></a>';
+                return '<!--<a href="#" class="" onclick="showModal(1,'.$oauthclient['id'].',1)"><i class="fa fa-edit"></i></a>
+                &nbsp-->
+                <a href="#" data-id-passwd="'.$oauthclient['id'].'" class="delete-passwd"><i class="fa fa-trash"></i></a>';
             })
             ->editColumn('id', '{{$id}}')->toJson();
         //
@@ -91,5 +91,18 @@ class PasswordGrantTokenController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function eliminar($id)
+    {
+
+        try{
+            $oauthclient = OauthClient::find($id);
+            $oauthclient->delete();
+            return 1;
+        }catch(\Exception $e){
+            return 2;
+        }
+
     }
 }

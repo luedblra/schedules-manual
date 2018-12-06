@@ -20,7 +20,7 @@
          Destination:
       </label>
       <div class="form-group">
-         {!! Form::select('destination',$harbors,null,['id' => 'destinationid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('destination',$harbors,null,['id' => 'destinationid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
    <div class="col-lg-4">
@@ -28,7 +28,7 @@
          Carrier:
       </label>
       <div class="form-group">
-         {!! Form::select('carrier',$carriers,null,['id' => 'carrierid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('carrier',$carriers,null,['id' => 'carrierid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
 </div>
@@ -37,7 +37,7 @@
       <label for="vesselid" class="form-control-label" >
          Vessel:
       </label>
-      <input type="text" name="vessel"  value="" class="form-control" id="vesselid">
+      <input type="text" name="vessel"  value="" class="form-control" required id="vesselid">
    </div>
    <div class="col-lg-4" >
       <label for="voyageid" class="form-control-label">
@@ -50,7 +50,7 @@
          Route Type:
       </label>
       <div class="form-group">
-         {!! Form::select('routetype',$routetypes,null,['id' => 'routetypeid', 'class' => 'select2 form-control'])!!}
+         {!! Form::select('routetype',$routetypes,null,['id' => 'routetypeid', 'class' => 'select2 form-control','required'])!!}
       </div>
    </div>
 </div>
@@ -65,13 +65,13 @@
       <label for="etdid" class="form-control-label">
          Etd:
       </label>
-      {!! Form::date('etd',\Carbon\Carbon::now(),['class' => 'form-control'])!!}
+      {!! Form::date('etd',\Carbon\Carbon::now(),['class' => 'form-control','required'])!!}
    </div>
    <div class="col-lg-4" >
       <label for="etaid" class="form-control-label" >
          Eta:
       </label>
-      {!! Form::date('eta',\Carbon\Carbon::now(),['class' => 'form-control'])!!}
+      {!! Form::date('eta',\Carbon\Carbon::now(),['class' => 'form-control','required'])!!}
    </div>
 </div>
 <div class="form-group row">
@@ -79,7 +79,7 @@
       <label for="transittimeid" class="form-control-label">
          Transit Time:
       </label>
-      <input type="text" name="transittime"  value="" class="form-control" id="transittimeid">
+      <input type="text" name="transittime"  value="" class="form-control"  required id="transittimeid">
    </div>
 </div>
 <input type="hidden" name="account_id"  value="1" class="form-control" id="accountidid">
