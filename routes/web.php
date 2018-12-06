@@ -12,46 +12,54 @@
 */
 
 Route::get('/', function () {
-   return view('welcome');
+    return view('welcome');
 });
 
 Route::get('/guia', function () {
-   return view('guia');
+    return view('guia');
 });
 
 
 Route::get('verify/{token}', 'Auth\RegisterController@verifyUser');
 
 Route::middleware(['auth'])->prefix('Harbors')->group(function () {
-   Route::resource('UploadFile','FileHarborsPortsController');
-   Route::get('/loadViewAdd','FileHarborsPortsController@loadviewAdd')->name('load.View.Add');
-   Route::get('/destroyharbor/{id}','FileHarborsPortsController@destroyharbor')->name('destroy.harbor');
+    Route::resource('UploadFile','FileHarborsPortsController');
+    Route::get('/loadViewAdd','FileHarborsPortsController@loadviewAdd')->name('load.View.Add');
+    Route::get('/destroyharbor/{id}','FileHarborsPortsController@destroyharbor')->name('destroy.harbor');
 });
 
 Route::middleware(['auth'])->prefix('Importation')->group(function () {
-   Route::resource('importation','ImportationController');
-   Route::put('/Upload-Schedules','ImportationController@uploadSchedules')->name('upload.schedules');
+    Route::resource('importation','ImportationController');
+    Route::put('/Upload-Schedules','ImportationController@uploadSchedules')->name('upload.schedules');
 });
 
 
 Route::middleware(['auth'])->prefix('AcountS')->group(function () {
-   Route::get('/AccountDelete/{id}','AccountSchedulesController@eliminar')->name('account.delete');
-   Route::resource('AcountS','AccountSchedulesController');
+    Route::get('/AccountDelete/{id}','AccountSchedulesController@eliminar')->name('account.delete');
+    Route::resource('AcountS','AccountSchedulesController');
 });
 
 Route::middleware(['auth'])->prefix('Schedules')->group(function () {
-   Route::get('/SchedulesGoodFailed/{id}/{selector}','SchedulesController@GoodAndFailedSchedules')->name('good.failed.schedules');
-   Route::get('/ScheduleDelete/{id}/{selector}','SchedulesController@eliminar')->name('schedule.delete');
-   Route::get('/ShowModal/{id}/{selector}/{selectorRet}','SchedulesController@ShowModal')->name('show.modal.schedules');
-   Route::get('/CreateTwo','SchedulesController@createtwo')->name('createtwo.modal.schedules');
-   Route::resource('schedule','SchedulesController');
+    Route::get('/SchedulesGoodFailed/{id}/{selector}','SchedulesController@GoodAndFailedSchedules')->name('good.failed.schedules');
+    Route::get('/ScheduleDelete/{id}/{selector}','SchedulesController@eliminar')->name('schedule.delete');
+    Route::get('/ShowModal/{id}/{selector}/{selectorRet}','SchedulesController@ShowModal')->name('show.modal.schedules');
+    Route::get('/CreateTwo','SchedulesController@createtwo')->name('createtwo.modal.schedules');
+    Route::resource('schedule','SchedulesController');
 });
-/*
-Route::middleware(['auth'])->prefix('scheduleAPIWEB')->group(function () {
-   Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->name('all.expecifict');
-   Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier');
+
+Route::middleware(['auth'])->prefix('PasswordGT')->group(function () {
+    Route::get('/CreateTwoPass','PasswordGrantTokenController@createtwo')->name('createtwo.modal.password');
+    Route::resource('passwordGT','PasswordGrantTokenController');
 });
-*/
+
+Route::get('create-passport-client', function () {
+    Artisan::call('passport:client', 
+        ['--password' => 1, '--name' => 'AccessTokenName' ]
+    );
+
+    return redirect()->route('passwordGT.index');
+})->middleware(['auth'])->name('create.passport.client');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -7,16 +7,16 @@
 @parent
 
 @endsection
-@section('title', 'Schedules')
+@section('title', 'Password Token')
 @section('cabecera')
 
 <div class="col-sm-6">
-    <h1 class="m-0 text-dark">List Of Schedules</h1>
+    <h1 class="m-0 text-dark">Password Grant Token</h1>
 </div><!-- /.col -->
 <div class="col-sm-6">
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="/home">Home</a></li>
-        <li class="breadcrumb-item active">Schedules</li>
+        <li class="breadcrumb-item active">Password Grant Token</li>
     </ol>
 </div>
 
@@ -59,8 +59,8 @@
 
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fa fa-tag"></i>
-                    Manage Schedules
+                    <i class="fa fa-tag"></i> 
+                    Manage Key - Password
                 </h3>
             </div>
 
@@ -68,22 +68,17 @@
 
                 <div class="col-lg-2">
                     <button onclick="showModalAdd()" class="btn btn-block btn-outline-primary "> <span class="fa fa-plus"></span> Add</button>
+                    
+                    <a href="{{route('create.passport.client')}}" onclick="showModalAdd()" class="btn btn-block btn-outline-primary "> <span class="fa fa-plus"></span> Add</a>
                 </div>
 
-                <table class="table table-condensed" id="goodschedulestabla" width="100%">
+                <table class="table table-condensed" id="passwordtable" width="100%">
                     <thead  width="100%">
                         <tr>
                             <th style="width:3%">ID</th>
-                            <th style="width:7%">Origin</th>
-                            <th style="width:7%">Destination</th>
-                            <th style="width:5%">Carrier</th>
-                            <th style="width:5%">Vessel</th>
-                            <th style="width:3%">Voyage</th>
-                            <th style="width:20%">Route Type</th>
-                            <th style="width:10%">Via</th>
-                            <th style="width:10%">Etd</th>
-                            <th style="width:10%">Eta</th>
-                            <th style="width:10%">Transit Time</th>
+                            <th style="width:7%">Name</th>
+                            <th style="width:7%">Secret</th>
+                            <th style="width:5%">Redirect</th>
                             <th style="width:5%">Options</th>
                         </tr>
                     </thead>
@@ -98,7 +93,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">
-                    Schedules
+                    Password Grant Token
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">
@@ -112,27 +107,21 @@
         </div>
     </div>
 </div>
+
 @section('js-inferior')
 @parent
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script>
 
     $(function() {
-        $('#goodschedulestabla').DataTable({
+        $('#passwordtable').DataTable({
             processing: true,
-            ajax: '{!! route("schedule.create") !!}',
+            ajax: '{!! route("passwordGT.create") !!}',
             columns: [
                 { data: 'id', name: 'id' },
-                { data: 'origin', name: 'origin_portLb' },
-                { data: 'destination', name: 'destination' },
-                { data: 'carrier_id', name: "carrier_id" },
-                { data: 'vessel', name: 'vessel' },
-                { data: 'voyage', name: "voyage" },
-                { data: 'route_type', name: 'route_type' },
-                { data: 'via', name: 'via' },
-                { data: 'etd', name: 'etd' },
-                { data: 'eta', name: 'eta' },
-                { data: 'transit_time', name: 'transit_time' },
+                { data: 'name', name: 'name' },
+                { data: 'secret', name: "secret" },
+                { data: 'redirect', name: "redirect" },
                 { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             "lengthChange": false,
@@ -149,70 +138,13 @@
 
     });
 
-    function showModal(selector,id,selectorRet){
-        if(selector == 1){
-            var url = '{{ route("show.modal.schedules",[":id",":selector",":selectorRet"]) }}';
-            url = url.replace(':id',id);
-            url = url.replace(':selector',selector);
-            url = url.replace(':selectorRet',selectorRet);
-            $('#modal-body').load(url,function(){
-                $('#update').modal();
-            });
-        } 
-    }
-
     function showModalAdd(){
-        var url = '{{ route("createtwo.modal.schedules") }}';
+        var url = '{{ route("createtwo.modal.password") }}';
         $('#modal-body').load(url,function(){
             $('#update').modal();
         });
 
     }
-
-
-    $(document).on('click','.delete-schedule', function(e){
-        var elemento = $(this);
-        var id = $(elemento).attr('data-id-schedule'); 
-        swal({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this! Id: "+id,
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-        }).then(function(result){
-            if (result.value) {
-
-                url='{!! route("schedule.delete",[":id",1]) !!}';
-                url = url.replace(':id',id);
-                // $(this).closest('tr').remove();
-                $.ajax({
-                    url:url,
-                    method:'get',
-                    success: function(data){
-                        if(data == 1){
-                            swal(
-                                'Deleted!',
-                                'Your rate has been deleted.',
-                                'success'
-                            )
-                            $(elemento).closest('tr').remove();
-
-                        }else if(data == 2){
-                            swal("Error!", "an internal error occurred!", "error");
-                        }
-                    }
-                });
-            } else if (result.dismiss === 'cancel') {
-                swal(
-                    'Cancelled',
-                    'Your rate is safe :)',
-                    'error'
-                )
-            }
-        });
-    });
 
 </script>
 @endsection
