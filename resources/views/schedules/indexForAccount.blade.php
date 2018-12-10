@@ -100,6 +100,10 @@
                   </div>
                   <div class="tab-pane  container" id="failedschedules">
                      <br />
+                     <div class="col-lg-2">
+                        <a href="{{route('schedule.edit',$id)}}" class="btn btn-block btn-outline-primary ">Reprocess &nbsp;&nbsp;<span class="fa fa-sync"></span></a>
+                     </div>
+
                      <table class="table table-condensed" id="failedschedulestabla" width="100%">
                         <thead>
                            <tr>
