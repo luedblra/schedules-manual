@@ -89,7 +89,7 @@ class ImportationController extends Controller
                 ->url($nombre),function($reader) use($request,$coordenates) {
                    $reader->noHeading = true;
                    $reader->ignoreEmpty();
-                   $reader->takeRows(2);
+                   $reader->takeRows(1);
 
                    $read = $reader->first();
                    $columna= array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V');
