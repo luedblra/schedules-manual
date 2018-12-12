@@ -53,6 +53,7 @@ class ImportationSchedulesJob implements ShouldQueue
       Excel::selectSheetsByIndex(0)
          ->Load($path,function($reader) use($requestobj,$errors,$NameFile) {
             $reader->noHeading = true;
+            
 
             $accountidR    = $requestobj["accountid"];
             $fileidR       = $requestobj["fileid"];
