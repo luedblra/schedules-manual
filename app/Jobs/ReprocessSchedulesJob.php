@@ -224,5 +224,17 @@ class ReprocessSchedulesJob implements ShouldQueue
 
          }
       }
+      
+        $countSchedules      = Schedule::where('account_schedules_id',$id)->get();
+         $countSchedulesfail  = FailedSchedule::where('account_schedules_id',$id)->get();
+
+         $countSchedules      = count($countSchedules);
+         $countSchedulesfail  = count($countSchedulesfail);
+
+         $accountcount =  AccountSchedule::find($id);
+         $accountcount->countschedule       = $countSchedules;
+         $accountcount->countfailedschedule = $countSchedulesfail;
+         $accountcount->update();
+      
    }
 }

@@ -615,6 +615,18 @@ class SchedulesController extends Controller
 
             }
          }
+
+         $countSchedules      = Schedule::where('account_schedules_id',$id)->get();
+         $countSchedulesfail  = FailedSchedule::where('account_schedules_id',$id)->get();
+
+         $countSchedules      = count($countSchedules);
+         $countSchedulesfail  = count($countSchedulesfail);
+
+         $accountcount =  AccountSchedule::find($id);
+         $accountcount->countschedule       = $countSchedules;
+         $accountcount->countfailedschedule = $countSchedulesfail;
+         $accountcount->update();
+
          $request->session()->flash('message.nivel', 'success');
          $request->session()->flash('message.icon', 'check');
          $request->session()->flash('message.title', 'The schedules was reprocess!');
