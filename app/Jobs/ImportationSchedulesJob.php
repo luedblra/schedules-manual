@@ -344,7 +344,7 @@ class ImportationSchedulesJob implements ShouldQueue
             $accountcount->update();
 
             $fileobj = FileTmp::where('account_schedules_id',$accountidR)->first();
-            Storage::delete($fileobj['namefile']);
+            Storage::disk('UpLoadFile')->delete($fileobj['namefile']);
             $fileobj->delete();
 
          });

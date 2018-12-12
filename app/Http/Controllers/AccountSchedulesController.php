@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\FileTmp;
 use App\AccountSchedule;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Storage;
 
 
 class AccountSchedulesController extends Controller
@@ -114,6 +116,10 @@ class AccountSchedulesController extends Controller
    {
       try{
          $account = AccountSchedule::find($id);
+         $tmpfile = FileTmp::where('account_schedules_id',$id)->first();
+         if(empty($tmpfile['id']) != true){
+            Storage::disk('UpLoadFile')->delete($tmpfile['namefile']);
+         }
          $account->delete();
          return 1;
       }catch(\Exception $e){
