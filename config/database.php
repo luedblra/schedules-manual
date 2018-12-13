@@ -1,13 +1,13 @@
 <?php
 
-/*
+
 if (!defined('RDS_HOSTNAME')) {
     define('RDS_HOSTNAME', $_SERVER['RDS_HOSTNAME']);
     define('RDS_USERNAME', $_SERVER['RDS_USERNAME']);
     define('RDS_PASSWORD', $_SERVER['RDS_PASSWORD']);
     define('RDS_DB_NAME', $_SERVER['RDS_DB_NAME']);
 }
-*/
+
 
 return [
 
@@ -48,7 +48,7 @@ return [
          'prefix' => '',
          'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
       ],
-
+/*
       'mysql' => [
          'driver' => 'mysql',
          'host' => env('DB_HOST', '127.0.0.1'),
@@ -64,7 +64,7 @@ return [
          'strict' => true,
          'engine' => 'innodb',
       ],
-/*
+*/
       'mysql' => [
             'driver' => 'mysql',
             'host' => RDS_HOSTNAME,
@@ -79,7 +79,7 @@ return [
             'strict' => false,
             'engine' => null,
         ],
-*/
+
       'pgsql' => [
          'driver' => 'pgsql',
          'host' => env('DB_HOST', '127.0.0.1'),
