@@ -6,54 +6,78 @@ use App\Harbor;
 use App\Carrier;
 use App\Schedule;
 use App\RouteType;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ScheduleResource;
 
 class ApiController extends Controller
 {
-    public function AllExpecifict($carrier,$origin,$destination){
-        $originBol      = false;
-        $destinationBol = false;
-        $carrierBol     = false;
 
-        $origin        = Harbor::where('code',$origin)->orWhere('id',$origin)->first();
-        $destination   = Harbor::where('code',$destination)->orWhere('id',$destination)->first();
-        $carrier       = Carrier::where('name',$carrier)->orWhere('id',$carrier)->first();
+   // Para imprimir El JSON - API
+   public function AllExpecifict($carrier,$origin,$destination){
+      $originBol      = false;
+      $destinationBol = false;
+      $carrierBol     = false;
 
-        if(count($origin) == 1){
-            $originBol  = true;
-        }
-        if(count($destination) == 1){
-            $destinationBol = true;
-        }
-        if(count($carrier) == 1){
-            $carrierBol = true;
-        }
+      $origin        = Harbor::where('code',$origin)->orWhere('id',$origin)->first();
+      $destination   = Harbor::where('code',$destination)->orWhere('id',$destination)->first();
+      $carrier       = Carrier::where('name',$carrier)->orWhere('id',$carrier)->first();
 
-        if($originBol == true && $destinationBol == true && $carrierBol == true ){
+      if(count($origin) == 1){
+         $originBol  = true;
+      }
+      if(count($destination) == 1){
+         $destinationBol = true;
+      }
+      if(count($carrier) == 1){
+         $carrierBol = true;
+      }
 
-            $schedules     = DB::select('call procedure_schedules_all('.$origin['id'].','.$destination['id'].','.$carrier['id'].')');
-        } else {
-            $schedules = [];
-        }
-        
-        return new ScheduleResource($schedules);
-        
-        //return response()->json($schedules);
-    }
+      if($originBol == true && $destinationBol == true && $carrierBol == true ){
 
-    public function ForCarrier($carrier){
+         $schedules     = DB::select('call procedure_schedules_all('.$origin['id'].','.$destination['id'].','.$carrier['id'].')');
+      } else {
+         $schedules = [];
+      }
 
-        $carrier    = Carrier::where('name',$carrier)->orWhere('id',$carrier)->first();
-        if(count($carrier) > 0){
-            $schedules  = DB::select('call procedure_schedules('.$carrier["id"].')');
-        } else {
-            $schedules = [];
-        }
-        
-        return new ScheduleResource($schedules);
-        
-        //return response()->json($schedules);
-    }
+      return new ScheduleResource($schedules);
+
+      //return response()->json($schedules);
+   }
+
+   public function ForCarrier($carrier){
+
+      $carrier    = Carrier::where('name',$carrier)->orWhere('id',$carrier)->first();
+      if(count($carrier) > 0){
+         $schedules  = DB::select('call procedure_schedules('.$carrier["id"].')');
+      } else {
+         $schedules = [];
+      }
+
+      return new ScheduleResource($schedules);
+
+      //return response()->json($schedules);
+   }
+
+   // Para Consumir la App Automatic
+
+   public function testApi(){
+
+      $client = new Client();
+      $response = $client->request('GET', 'http://schedules/schedule/maersk');
+      echo $response->getStatusCode(); # 200
+      echo $response->getHeaderLine('content-type'); # 'application/json; charset=utf8'
+      $dataGen = json_decode($response->getBody()->getContents(),true);
+         dd($dataGen);
+      foreach($dataGen['data'] as $data){
+         $originD  = $data['OriginPortCode'];
+         $destinyD = $data['DestinationPortCode'];
+         
+         $origin = Harbor::where('code',$originD)->orWhere('varation','LIKE',$destinyD)->get();
+         
+         dd($origin);
+      }
+
+   }
 }

@@ -39,6 +39,10 @@ Route::middleware(['auth'])->prefix('AcountS')->group(function () {
     Route::resource('AcountS','AccountSchedulesController');
 });
 
+Route::middleware(['auth'])->prefix('Api')->group(function () {
+    Route::get('/TestApi','ApiController@testApi')->name('test.api');
+});
+
 Route::middleware(['auth'])->prefix('Schedules')->group(function () {
     Route::get('/SchedulesGoodFailed/{id}/{selector}','SchedulesController@GoodAndFailedSchedules')->name('good.failed.schedules');
     Route::get('/ScheduleDelete/{id}/{selector}','SchedulesController@eliminar')->name('schedule.delete');
