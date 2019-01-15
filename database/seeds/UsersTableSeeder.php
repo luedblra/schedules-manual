@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Administrator Schedules M',
                 'email' => 'info@cargofive.com',
                 'email_verified_at' => NULL,
-                'password' => '$2y$10$/1ZBGWLYgiLg10nFOUfuduAzrE3mu.6Hx0w.w52rfszR23YxLpNim',
+                'password' => bcrypt('secret'),
                 'remember_token' => NULL,
                 'created_at' => '2018-12-07 18:23:31',
                 'updated_at' => '2018-12-07 18:23:31',
