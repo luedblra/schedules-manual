@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use PrvHarbor;
 use App\Harbor;
 use App\Carrier;
 use App\Schedule;
 use App\RouteType;
 use GuzzleHttp\Client;
+use App\FailedSchedule;
+use App\AccountSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ScheduleResource;
@@ -64,6 +67,15 @@ class ApiController extends Controller
 
     public function testApi(){
 
+        $now = new \DateTime();
+        $date = $now->format('Y-m-d');
+
+        $account = AccountSchedule::create([
+            'name'      => 'Data API Automatic',
+            'date'      => $date,
+            'user_id'   => 2
+        ]);
+
         $client = new Client();
         $response = $client->request('GET', 'http://sautomatic/schedule/maersk');
         echo $response->getStatusCode(); # 200
@@ -71,73 +83,161 @@ class ApiController extends Controller
         $dataGen = json_decode($response->getBody()->getContents(),true);
         $scheduleColle = collect([]);
         foreach($dataGen['data'] as $data){
+
             $originVal      = '';
             $destinyVal     = '';
             $etdVal         = '';
             $etaVal         = '';
-            $vesselVal      = '';
+            $voyageVal      = '';
             $vesselNameVal  = '';
             $carrierVal     = '';
             $transitimeVal  = '';
             $transferVal    = '';
+            $originApi      = '';
+            $destinyApi     = '';
+            $routetypeVal   = '';
 
-            $originApi  = $data['OriginPortCode'];
-            $destinyApi = $data['DestinationPortCode'];
-            $port       = 'las palmas';
+            $originExitBol  = false;
+            $destinyExitBol = false;
+            $carrierExitBol = false;
 
-            $portExitBol    = false;
-            $portMulExitBol = false;
-            $portCollect    = collect([]);
+            //---------- DECLARACIONES ----------------------------------
 
-            $port     = strtolower(trim($port));
-            $portobj  = Harbor::where('varation','LIKE','%'.$port.'%')->with('country')->get();
+            $originApi      = $data['OriginPortCode'];
+            $destinyApi     = $data['DestinationPortCode'];
+            $etdApi         = $data['Etd'];
+            $etaApi         = $data['Eta'];
+            $voyageApi      = $data['Vessel'];
+            $vesselApi      = $data['VesselName'];
+            $carrierApi     = $data['Carrier'];
+            $transitimeApi  = $data['Transitime'];
+            $transferApi    = $data['Transfer'];
 
-            if(count($portobj) == 1){
-                $portExitBol = true;
-                foreach($portobj as $portuni){
-                    $portVal = $portuni->id;
-                }
-            } else if(count($portobj) > 1){
-                $portMulExitBol = true;
-                $puertoArr = [];
-                foreach($portobj as $portm){
-                    array_push($puertoArr,['id' => $portm->id,'country' => $portm->country['name'],'name' => $portm->name]);
-                }
+            // --------- ORIGIN -----------------------------------------            
+            $originApiArr   = PrvHarbor::get_harbor_api($originApi);
+            $originExitBol  = $originApiArr['boolean'];
+            $originVal      = $originApiArr['puerto'];
 
-                $portVal = json_encode($puertoArr,true);
+            // --------- DESTINATION ------------------------------------            
+            $destinyArr = PrvHarbor::get_harbor_api($destinyApi);
+            $destinyExitBol  = $destinyArr['boolean'];
+            $destinyVal      = $destinyArr['puerto'];
+
+            // --------- ETD --------------------------------------------
+            if(empty($etdApi) != true){
+                $etdVal = $etdApi;
             } else {
-                $portVal = $port;
+                $etdVal = $etdApi.'_E_E';
             }
 
-            $prueba = [
-                'puerto'    => $portVal,
-                'unico'     => $portExitBol,
-                'multiple'  => $portMulExitBol
-            ];
+            // --------- ETA --------------------------------------------
+            if(empty($etaApi) != true){
+                $etaVal = $etaApi;
+            } else {
+                $etaVal = $etaApi.'_E_E';
+            }  
+
+            // --------- VOYAGE -----------------------------------------
+            if(empty($voyageApi) != true){
+                $voyageVal = $voyageApi;
+            } else {
+                $voyageVal = $voyageApi.'_E_E';
+            }   
+
+            // --------- VESSEL NAME ------------------------------------
+            if(empty($vesselApi) != true){
+                $vesselVal = $vesselApi;
+            } else {
+                $vesselVal = $vesselApi.'_E_E';
+            } 
+
+            // --------- CARRIER ----------------------------------------
+            $carrierobj = Carrier::where('name',$carrierApi)->first();
+            if(empty($carrierobj) != true){
+                $carrierExitBol = true;
+                $carrierVal = $carrierobj->id;
+            } else {
+                $carrierVal = $carrierApi.'_E_E';
+            }  
+
+            // --------- TRANSI TIME ------------------------------------
+            if(empty($transitimeApi) != true){
+                $transitimeVal = $transitimeApi;
+            } else {
+                $transitimeVal = $transitimeApi.'_E_E';
+            }         
+            // --------- TRASNFER ---------------------------------------
+            if(count($transferApi) == 1 || count($transferApi) == 0){
+                $routetypeVal = 1;
+            } else if(count($transferApi) > 1){
+                $routetypeVal = 2;
+            } 
+
+            /*
+            $scheduleArr =  [
+                'originBol'     => $originExitBol,
+                'origin'        => $originVal,
+                'destinyBol'    => $destinyExitBol,
+                'destiny'       => $destinyVal,
+                'etd'           => $etdVal,
+                'eta'           => $etaVal,
+                'voyage'        => $voyageVal,
+                'vessel'        => $vesselVal,
+                'carrierBol'    => $carrierExitBol,
+                'carrier'       => $carrierVal,
+                'transitimeVal' => $transitimeVal,
+                'route_type'    => $routetypeVal,
+                'account_id'    => $account->id
+            ];            
+
+            dd($scheduleArr);*/
+
+            if($originExitBol == true && $destinyExitBol == true && $carrierExitBol == true){
+
+                $countexitSched   = Schedule::where('origin',$originVal)
+                    ->where('destination',$destinyVal)
+                    ->where('carrier_id',$carrierVal)
+                    ->where('vessel',$vesselVal)
+                    ->where('voyage',$voyageVal)
+                    ->where('route_type',$routetypeVal)
+                    //->where('via',$viaVal)
+                    ->where('etd',$etdVal)
+                    ->where('eta',$etaVal)
+                    ->where('transit_time',$transitimeVal)
+                    ->get();
+
+                if(count($countexitSched) == 0){
+                    Schedule::create([
+                        'origin'                => $originVal,
+                        'destination'           => $destinyVal,
+                        'carrier_id'            => $carrierVal,
+                        'vessel'                => $vesselVal,
+                        'voyage'                => $voyageVal,
+                        'route_type'            => $routetypeVal,
+                        'via'                   => 'N/A',
+                        'etd'                   => $etdVal,
+                        'eta'                   => $etaVal,
+                        'transit_time'          => $transitimeVal,
+                        'account_schedules_id'  => $account->id
+                    ]);
+                }
+            } else {
+                //Fallidos
+            }
 
 
-            /*$scheduleArr =  [
-                'origin'                => $originVal,
-                'DestinationPortCode'   => 
-                'Etd'                   => 
-                'Eta'                   => 
-                'Vessel'                => 
-                'VesselName'            => 
-                'Carrier'               => 
-                'Transitime'            => 
-                'Transfer'              => 
-            ];
-            "OriginPortCode" => "Valparaiso"
-                "DestinationPortCode" => "N'Djamena"
-                "Etd" => "2019-01-14"
-                "Eta" => "2019-04-01"
-                "Vessel" => "275"
-                "VesselName" => "LICA MAERSK"
-                "Carrier" => "Maersk"
-                "Transitime" => 77
-                "Transfer" => 4*/
-            dd($prueba);
         }
+        $countSchedules      = Schedule::where('account_schedules_id',$account->id)->get();
+        $countSchedulesfail  = FailedSchedule::where('account_schedules_id',$account->id)->get();
+
+        $countSchedules      = count($countSchedules);
+        $countSchedulesfail  = count($countSchedulesfail);
+
+        $accountcount =  AccountSchedule::find($account->id);
+        $accountcount->countschedule       = $countSchedules;
+        $accountcount->countfailedschedule = $countSchedulesfail;
+        $accountcount->update();
+        dd('listo');
 
     }
 }
