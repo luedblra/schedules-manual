@@ -69,9 +69,10 @@ class ApiController extends Controller
 
         $now = new \DateTime();
         $date = $now->format('Y-m-d');
-
+        $hour = $now->format('H:m:s');
+        
         $account = AccountSchedule::create([
-            'name'      => 'Data API Automatic',
+            'name'      => 'Data API Automatic '.$hour,
             'date'      => $date,
             'user_id'   => 2
         ]);
@@ -173,8 +174,8 @@ class ApiController extends Controller
                 $routetypeVal = 2;
             } 
 
-            /*
-            $scheduleArr =  [
+
+            /*            $scheduleArr =  [
                 'originBol'     => $originExitBol,
                 'origin'        => $originVal,
                 'destinyBol'    => $destinyExitBol,
@@ -189,8 +190,8 @@ class ApiController extends Controller
                 'route_type'    => $routetypeVal,
                 'account_id'    => $account->id
             ];            
+*/
 
-            dd($scheduleArr);*/
 
             if($originExitBol == true && $destinyExitBol == true && $carrierExitBol == true){
 
@@ -223,6 +224,61 @@ class ApiController extends Controller
                 }
             } else {
                 //Fallidos
+
+                // --------- ORIGIN ---------------------------------------------------------
+                if($originExitBol == true){
+                    $originVal = Harbor::find($originVal);
+                    $originVal = $originVal->name;
+                }
+
+                // --------- DESTINATION ----------------------------------------------------
+                if($destinyExitBol == true){
+                    $destinyVal = Harbor::find($destinyVal);
+                    $destinyVal = $destinyVal->name;
+                }
+
+                // --------- CARRIER --------------------------------------------------------
+                if($carrierExitBol == true){
+                    $carrierVal = Carrier::find($carrierVal);
+                    $carrierVal = $carrierVal->name;
+                }
+                // --------- ROUTE TYPE -----------------------------------------------------
+                
+                $routetypeVal = RouteType::find($routetypeVal);
+                $routetypeVal = $routetypeVal->name;                
+/*
+                $scheduleFailArr =  [
+                    'originBol'     => $originExitBol,
+                    'origin'        => $originVal,
+                    'destinyBol'    => $destinyExitBol,
+                    'destiny'       => $destinyVal,
+                    'etd'           => $etdVal,
+                    'eta'           => $etaVal,
+                    'voyage'        => $voyageVal,
+                    'vessel'        => $vesselVal,
+                    'carrierBol'    => $carrierExitBol,
+                    'carrier'       => $carrierVal,
+                    'transitimeVal' => $transitimeVal,
+                    'route_type'    => $routetypeVal,
+                    'account_id'    => $account->id
+                ];   */
+
+
+                FailedSchedule::create([
+                    'origin'                => $originVal,
+                    'destination'           => $destinyVal,
+                    'carrier'               => $carrierVal,
+                    'vessel'                => $vesselVal,
+                    'voyage'                => $voyageVal,
+                    'route_type'            => $routetypeVal,
+                    'via'                   => 'N/A',
+                    'etd'                   => $etdVal,
+                    'eta'                   => $etaVal,
+                    'transit_time'          => $transitimeVal,
+                    'account_schedules_id'  => $account->id
+                ]);
+
+                //dd($scheduleFailArr);
             }
 
 
