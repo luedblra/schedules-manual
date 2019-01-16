@@ -70,18 +70,33 @@ class ApiController extends Controller
         $now = new \DateTime();
         $date = $now->format('Y-m-d');
         $hour = $now->format('H:m:s');
-        
+
         $account = AccountSchedule::create([
             'name'      => 'Data API Automatic '.$hour,
             'date'      => $date,
             'user_id'   => 2
         ]);
-
+        
         $client = new Client();
-        $response = $client->request('GET', 'http://sautomatic/schedule/maersk');
-        echo $response->getStatusCode(); # 200
-        echo $response->getHeaderLine('content-type'); # 'application/json; charset=utf8'
+        $response = $client->post('http://sautomatic/oauth/token', [
+            'form_params' => [
+                'client_id' => 2,
+                // The secret generated when you ran: php artisan passport:install
+                'client_secret' => 'Z3LdYgCgkr2zkf8vsADQRx5eKQJC5PrsK2lrSl40',
+                'grant_type' => 'password',
+                'username' => 'user@example.com',
+                'password' => 'secret',
+                'scope' => '*',
+            ]
+        ]);
+        $auth = json_decode((string)$response->getBody());
+        $response = $client->get('http://sautomatic/schedule/maersk', [
+            'headers' => [
+                'Authorization' => 'Bearer '.$auth->access_token,
+            ]
+        ]);
         $dataGen = json_decode($response->getBody()->getContents(),true);
+        
         $scheduleColle = collect([]);
         foreach($dataGen['data'] as $data){
 
@@ -243,10 +258,10 @@ class ApiController extends Controller
                     $carrierVal = $carrierVal->name;
                 }
                 // --------- ROUTE TYPE -----------------------------------------------------
-                
+
                 $routetypeVal = RouteType::find($routetypeVal);
                 $routetypeVal = $routetypeVal->name;                
-/*
+                /*
                 $scheduleFailArr =  [
                     'originBol'     => $originExitBol,
                     'origin'        => $originVal,
