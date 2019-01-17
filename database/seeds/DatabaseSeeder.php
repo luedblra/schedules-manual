@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
       $this->call(CarriersTableSeeder::class);
       $this->call(RoutesTypesTableSeeder::class);
       $this->call(AccountSchedulesTableSeeder::class);
-   }
+       $this->call(OauthClientsTableSeeder::class);
+        $this->call(CredentialsApiTableSeeder::class);
+    }
 }
