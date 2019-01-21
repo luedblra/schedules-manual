@@ -95,7 +95,7 @@
       <div class="modal-content">
          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">
-               Password Grant Token
+               Credential Api
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">
@@ -144,57 +144,19 @@
 
    });
 
-   function showModalAdd(){
-      var url = '{{ route("createtwo.modal.password") }}';
+
+   
+      function showModal(id){
+      // alert('funciona');
+
+      url = "{{route('passwordGT.edit',':id')}}"
+      url = url.replace(':id',id);
       $('#modal-body').load(url,function(){
-         $('#update').modal();
+         $('#update').modal('show');
       });
 
    }
 
-   $(document).on('click','.delete-passwd', function(e){
-      var elemento = $(this);
-      var id = $(elemento).attr('data-id-passwd'); 
-      swal({
-         title: 'Are you sure?',
-         text: "You won't be able to revert this! Id: "+id,
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Yes, delete it!',
-         cancelButtonText: 'No, cancel!',
-         reverseButtons: true
-      }).then(function(result){
-         if (result.value) {
-
-            url='{!! route("password.delete",":id") !!}';
-            url = url.replace(':id',id);
-            // $(this).closest('tr').remove();
-            $.ajax({
-               url:url,
-               method:'get',
-               success: function(data){
-                  if(data == 1){
-                     swal(
-                        'Deleted!',
-                        'Your rate has been deleted.',
-                        'success'
-                     )
-                     $(elemento).closest('tr').remove();
-
-                  }else if(data == 2){
-                     swal("Error!", "an internal error occurred!", "error");
-                  }
-               }
-            });
-         } else if (result.dismiss === 'cancel') {
-            swal(
-               'Cancelled',
-               'Your rate is safe :)',
-               'error'
-            )
-         }
-      });
-   });
 
 </script>
 @endsection

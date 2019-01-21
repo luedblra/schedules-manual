@@ -110,7 +110,7 @@ Simple Link
             </li>
 
             <li class="nav-item">
-               <a href="{{route('passwordGT.index')}}" class="nav-link" title="Acounts Schedules">
+               <a href="{{route('passwordGT.index')}}" class="nav-link" title="Password Grant Token">
                   <i class="nav-icon fa fa-unlock-alt"></i>
                   <p>
                      Password Grant Token
@@ -118,8 +118,8 @@ Simple Link
                </a>
             </li>
             <li class="nav-item">
-               <a href="{{route('index.credential.api')}}" class="nav-link" title="Acounts Schedules">
-                  <i class="nav-icon fa fa-unlock-alt"></i>
+               <a href="{{route('index.credential.api')}}" class="nav-link" title="Credentials Api">
+                  <i class="nav-icon fa fa-key"></i>
                   <p>
                      Credentials Api
                   </p>
@@ -135,10 +135,10 @@ Test - - Importation
 </a>
 </li> -->
             <li class="nav-item">
-               <a href="{{route('test.api')}}" class="nav-link" title="Habors">
+               <a href="{{route('test.api')}}" class="nav-link" title="Test Api Consume">
                   <i class="nav-icon fa fa-vial"></i>
                   <p>
-                     Test - - API
+                     Test API Consume
                   </p>
                </a>
             </li> 
