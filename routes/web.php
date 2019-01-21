@@ -54,6 +54,8 @@ Route::middleware(['auth'])->prefix('Schedules')->group(function () {
 Route::middleware(['auth'])->prefix('PasswordGT')->group(function () {
     Route::get('/passwordGTDelete/{id}','PasswordGrantTokenController@eliminar')->name('password.delete');
     Route::get('/CreateTwoPass','PasswordGrantTokenController@createtwo')->name('createtwo.modal.password');
+    Route::get('/IndexCredentialApi','PasswordGrantTokenController@credentialsapi')->name('index.credential.api');
+    Route::get('/DatatableCredetialApi','PasswordGrantTokenController@credentialsapiList')->name('datatable.credential.api');
     Route::resource('passwordGT','PasswordGrantTokenController');
 });
 

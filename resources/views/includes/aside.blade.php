@@ -117,6 +117,14 @@ Simple Link
                   </p>
                </a>
             </li>
+            <li class="nav-item">
+               <a href="{{route('index.credential.api')}}" class="nav-link" title="Acounts Schedules">
+                  <i class="nav-icon fa fa-unlock-alt"></i>
+                  <p>
+                     Credentials Api
+                  </p>
+               </a>
+            </li>
             <!--
 <li class="nav-item">
 <a href="{{route('importation.create')}}" class="nav-link" title="Habors">
