@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
    return $request->user();
 });
 
-Route::get('/maerskNotificacionApi','ApiController@eventApi')->name('api.test')->middleware('auth:api');
+Route::get('/NotificacionApi/{id}','ApiController@eventApi')->name('api.test')->middleware('auth:api');
 
 Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->middleware('auth:api');
 Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier')->middleware('auth:api');

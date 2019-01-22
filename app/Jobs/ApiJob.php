@@ -77,11 +77,13 @@ class ApiJob implements ShouldQueue
          // --------- ORIGIN -----------------------------------------            
          $originApiArr   = PrvHarbor::get_harbor_api($originApi);
          $originExitBol  = $originApiArr['boolean'];
+         $originMultBol  = $originApiArr['multiple'];
          $originVal      = $originApiArr['puerto'];
 
          // --------- DESTINATION ------------------------------------            
          $destinyArr = PrvHarbor::get_harbor_api($destinyApi);
          $destinyExitBol  = $destinyArr['boolean'];
+         $destinyMultBol  = $destinyArr['multiple'];
          $destinyVal      = $destinyArr['puerto'];
 
          // --------- ETD --------------------------------------------
@@ -190,13 +192,21 @@ class ApiJob implements ShouldQueue
                $originVal = Harbor::find($originVal);
                $originVal = $originVal->name;
             }
+             
+             if($originMultBol == true){
+               $originVal = $originApi.'_E_E';
+            }
 
             // --------- DESTINATION ----------------------------------------------------
             if($destinyExitBol == true){
                $destinyVal = Harbor::find($destinyVal);
                $destinyVal = $destinyVal->name;
             }
-
+             
+             if($destinyMultBol == true){
+               $destinyVal = $destinyApi.'_E_E';
+            }
+             
             // --------- CARRIER --------------------------------------------------------
             if($carrierExitBol == true){
                $carrierVal = Carrier::find($carrierVal);

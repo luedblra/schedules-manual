@@ -41,6 +41,7 @@ Route::middleware(['auth'])->prefix('AcountS')->group(function () {
 
 Route::middleware(['auth'])->prefix('Api')->group(function () {
     Route::get('/TestApi','ApiController@testApi')->name('test.api');
+    Route::get('/ForceApiConsume','ApiController@ForceApiConsume')->name('force.api.consume');
 });
 
 Route::middleware(['auth'])->prefix('Schedules')->group(function () {
