@@ -422,7 +422,6 @@ class SchedulesController extends Controller
 
    public function edit(Request $request, $id)
    {
-      dd($request);
       $failedschedules = FailedSchedule::where('account_schedules_id',$id)->get();
       $failedschedules = $failedschedules->toArray();
       if(count($failedschedules) >= 250){
@@ -577,7 +576,7 @@ class SchedulesController extends Controller
                'transittimeVal'  => $transittimeVal,
                'transittimeBol'  => $transittimeBol,
             ];
-dd($data);*/
+*/
 
             if($originBol == true && $destinationBol == true && $carrierBol == true &&
                $vesselBol == true && $routetypeBol == true && $etdVBol == true &&
