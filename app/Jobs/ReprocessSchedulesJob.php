@@ -125,7 +125,7 @@ class ReprocessSchedulesJob implements ShouldQueue
             $routetypeVal = $routetype->id;
 
          } else{
-            $routetypeVal = $routetypeVal.'_E_E';
+            $routetypeVal = $routetypeVal[0].'_E_E';
 
          }
          // VIA -------------------------------------------------------------------------------
