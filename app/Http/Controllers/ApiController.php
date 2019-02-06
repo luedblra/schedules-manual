@@ -68,8 +68,10 @@ class ApiController extends Controller
     // Para Consumir la App Automatic
 
     public function testApi(){
-        $destinationArr = PrvHarbor::get_harbor('ho chi minh cityvict');
-        dd($destinationArr);
+       
+       \Storage::disk('s3')->put('.env', 'Contents');
+        /*$destinationArr = PrvHarbor::get_harbor('ho chi minh cityvict');
+        dd($destinationArr);*/
     }
 
     public function ForceApiConsume(Request $request){

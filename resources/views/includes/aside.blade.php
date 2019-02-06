@@ -143,14 +143,14 @@ Test - - Importation
                     </a>
                 </li> 
 
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a href="{{route('test.api')}}" class="nav-link" title="Test Api Consume">
                         <i class="nav-icon fa fa-vial"></i>
                         <p>
                             Test API Consume
                         </p>
                     </a>
-                </li> 
+                </li> -->
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
