@@ -9,9 +9,10 @@ use App\Schedule;
 use App\RouteType;
 use App\FailedSchedule;
 use App\AccountSchedule;
-use App\Jobs\ReprocessSchedulesJob;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\ReprocessSchedulesJob;
 
 class SchedulesController extends Controller
 {
@@ -28,26 +29,27 @@ class SchedulesController extends Controller
 
    public function create()
    {
-      $schedules = Schedule::with('carrier','origen','destiny','routetype')->get();
-      //dd($schedules[0]);
+      //$schedules = Schedule::with('carrier','origen','destiny','routetype')->get();
+      $schedules = DB::select('call procedure_schedules_list()');
+      //dd($schedules);
       return DataTables::of($schedules)
 
          ->editColumn('origin', function ($schedules){ 
-            return $schedules['origen']['name'];
+            return $schedules->origin;
          })
          ->editColumn('destination', function ($schedules){ 
-            return $schedules['destiny']['name'];
+            return $schedules->destination;
          })
          ->editColumn('carrier_id', function ($schedules){ 
-            return $schedules['carrier']['name'];
+            return $schedules->carrier_id;
          })
          ->editColumn('route_type', function ($schedules){ 
-            return $schedules['routetype']['name'];
+            return $schedules->route_type;
          })
          ->addColumn('action', function ($schedules) {
-            return '<a href="#" class="" onclick="showModal(1,'.$schedules['id'].',1)"><i class="fa fa-edit"></i></a>
+            return '<a href="#" class="" onclick="showModal(1,'.$schedules->id.',1)"><i class="fa fa-edit"></i></a>
                 &nbsp;
-                <a href="#" data-id-schedule="'.$schedules['id'].'" class="delete-schedule"><i class="fa fa-trash"></i></a>';
+                <a href="#" data-id-schedule="'.$schedules->id.'" class="delete-schedule"><i class="fa fa-trash"></i></a>';
          })
          ->editColumn('id', '{{$id}}')->toJson();
    }
