@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/NotificacionApi/{id}','ApiController@eventApi')->name('api.test')->middleware('auth:api');
 
-Route::get('/{carrier}/{origin}/{destination}','ApiController@AllExpecifict')->middleware('auth:api');
+Route::get('/{carrier}/{origin}/{destination}/{date}','ApiController@AllExpecifict')->middleware('auth:api');
 Route::get('/{carrier}','ApiController@ForCarrier')->name('for.carrier')->middleware('auth:api');
 
 

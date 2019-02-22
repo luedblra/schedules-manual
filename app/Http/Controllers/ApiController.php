@@ -20,7 +20,7 @@ class ApiController extends Controller
 {
 
     // Para imprimir El JSON - API
-    public function AllExpecifict($carrier,$origin,$destination){
+    public function AllExpecifict($carrier,$origin,$destination,$date){
         $originBol      = false;
         $destinationBol = false;
         $carrierBol     = false;
@@ -29,6 +29,8 @@ class ApiController extends Controller
         $destination   = Harbor::where('code',$destination)->orWhere('id',$destination)->first();
         $carrier       = Carrier::where('name',$carrier)->orWhere('id',$carrier)->first();
 
+        $date = date('Y-m-d',$date);
+        
         if(count($origin) == 1){
             $originBol  = true;
         }
@@ -41,7 +43,7 @@ class ApiController extends Controller
 
         if($originBol == true && $destinationBol == true && $carrierBol == true ){
 
-            $schedules     = DB::select('call procedure_schedules_all('.$origin['id'].','.$destination['id'].','.$carrier['id'].')');
+            $schedules     = DB::select('call procedure_schedules_all('.$origin['id'].','.$destination['id'].','.$carrier['id'].','.$date.')');
         } else {
             $schedules = [];
         }
